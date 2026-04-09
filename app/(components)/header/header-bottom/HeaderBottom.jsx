@@ -2,7 +2,6 @@ import HeaderLinks from "../header-links/HeaderLinks";
 
 export default function HeaderBottom() {
     return (
-        // أضفنا border-t خفيف عشان يفصله عن الجزء العلوي من الهيدر
         <div className='hidden lg:flex px-8 '>
             <div className='container mx-auto'>
                 <div className='flex items-center justify-center'>

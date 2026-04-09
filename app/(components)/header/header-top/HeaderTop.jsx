@@ -4,6 +4,7 @@ import Search from './Search'
 import Actions from './Actions'
 import { Menu } from 'lucide-react'
 import { useMenu } from '@/context/MenuContext'
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function HeaderTop() {
     const { setIsMenuOpen, isMenuOpen } = useMenu()
@@ -14,8 +15,13 @@ export default function HeaderTop() {
                     <Logo />
                     <Search />
                     <Actions />
-                    <div className='border border-primary p-2 rounded-sm lg:hidden'>
-                        <Menu size={20} className='text-accent' onClick={() => setIsMenuOpen(!isMenuOpen)} />
+                    <div className='flex items-center gap-3 lg:hidden'>
+                        <div className='border border-primary p-2 rounded-sm '>
+                            <Menu size={20} className='text-accent' onClick={() => setIsMenuOpen(!isMenuOpen)} />
+                        </div>
+                        <div className='border border-primary p-2 rounded-sm'>
+                            <FaShoppingCart size={20} className='text-accent' />
+                        </div>
                     </div>
 
                 </div>

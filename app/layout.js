@@ -2,6 +2,10 @@ import { Libre_Franklin } from "next/font/google";
 import "./globals.css";
 import Header from "./(components)/header/Header";
 import MenuProvider from "@/context/MenuContext";
+import CartProvider from "@/context/CartContext";
+import Cart from "./(components)/cart/Cart";
+import { ClerkProvider } from "@clerk/nextjs";
+import SubHeader from "./(components)/sub-header/SubHeader";
 
 const libre = Libre_Franklin({
   subsets: ["latin"],
@@ -15,17 +19,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${libre.className} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <MenuProvider>
-          {children}
-          <Header />
-        </MenuProvider>
+    <ClerkProvider>
+      <html lang="en" className={`${libre.className} h-full antialiased`}>
+        <body className="min-h-full flex flex-col">
+          <MenuProvider>
+            <CartProvider>
+              <Cart />
+              <SubHeader />
+              <Header />
+              <main className="flex-1">
+                {children}
+              </main>
 
-      </body>
-    </html>
+            </CartProvider>
+          </MenuProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

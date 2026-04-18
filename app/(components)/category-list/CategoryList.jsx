@@ -18,7 +18,7 @@ const categoryList = [
 export function CategoryList() {
     return (
         <Select>
-            <SelectTrigger className="w-full max-w-48 border-none focus:ring-0 focus:outline-0">
+            <SelectTrigger className="w-full max-w-48 border-none focus:ring-0 focus:outline-0 text-primary!">
                 <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
@@ -29,8 +29,6 @@ export function CategoryList() {
                             <SelectItem value={item.value} key={item.key}>{item.title}</SelectItem>
                         )
                     })}
-
-
                 </SelectGroup>
             </SelectContent>
         </Select>

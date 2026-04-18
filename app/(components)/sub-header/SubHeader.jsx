@@ -6,8 +6,8 @@ import { SelectDemo } from "../select-demo/SelectDemo";
 export default function SubHeader() {
     const pathname = usePathname()
     return (
-        <section className={`py-3 px-8 bg-primary ${pathname.includes("sign-in") || pathname.includes("sign-up") ? "hidden" : "hidden lg:flex"}`}>
-            <div className='container mx-auto'>
+        <section className={`py-3 w-full bg-primary ${pathname.includes("sign-in") || pathname.includes("sign-up") ? "hidden" : "hidden lg:flex"}`}>
+            <div className='custom-container'>
                 <div className='flex items-center justify-between'>
                     <div className='px-3 flex items-center gap-4'>
                         <div className='relative'>

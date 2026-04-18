@@ -9,7 +9,7 @@ export default function Header() {
     const pathname = usePathname()
     return (
         <header className={`relative ${pathname.includes("sign-in") || pathname.includes("sign-up") ? "hidden" : "block"}`}>
-            <div className='container mx-auto'>
+            <div className='custom-container'>
                 <HeaderTop />
                 <HeaderBottom />
                 <HeaderMenu />

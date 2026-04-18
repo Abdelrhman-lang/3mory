@@ -11,7 +11,7 @@ import {
 export function SelectDemo() {
     return (
         <Select>
-            <SelectTrigger className="w-full max-w-48 border-none focus:ring-0 focus:outline-0">
+            <SelectTrigger className="w-full max-w-48 border focus:ring-0 focus:outline-0 text-white!">
                 <SelectValue placeholder="English" />
             </SelectTrigger>
             <SelectContent>

@@ -128,9 +128,9 @@
   text-align: center;
   font-size: 18px;
   /* Center slide text vertically */
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .swiper-slide img {
@@ -151,7 +151,7 @@
 }
 
 .swiper-button-prev:hover {
-  color: #fff !important;
+  color: #ff6a28 !important;
 }
 
 
@@ -166,7 +166,17 @@
 }
 
 .swiper-button-next:hover {
-  color: #fff !important;
+  color: #ff6a28 !important;
+}
+
+.swiper-pagination-bullet {
+  width: 30px !important;
+  height: 3px !important;
+  border-radius: unset !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ff6a28 !important;
 }
 
 @media (max-width: 600px) {

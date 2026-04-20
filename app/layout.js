@@ -6,6 +6,7 @@ import CartProvider from "@/context/CartContext";
 import Cart from "./(components)/cart/Cart";
 import { ClerkProvider } from "@clerk/nextjs";
 import SubHeader from "./(components)/sub-header/SubHeader";
+import FixedArrow from "./(components)/fixed-arrow/FixedArrow";
 
 const libre = Libre_Franklin({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
         <body className="min-h-full flex flex-col">
           <MenuProvider>
             <CartProvider>
+              <FixedArrow />
               <Cart />
               <SubHeader />
               <Header />

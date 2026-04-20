@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import SwiperGrid from "./SwiperGrid"
+import SectionTitle from "../sec-title/SectionTitle"
 
 const categores = [
     { id: 1, name: "Shoes", value: "shoes" },
@@ -25,11 +26,8 @@ export default function CollectionProducts({ title, text }) {
     const [activeCat, setActiveCat] = useState("shoes")
     return (
         <div>
-            <div className='flex flex-col items-center gap-2.5 mb-7 text-center'>
-                <h2 className='text-xl md:text-4xl text-primary font-bold capitalize'>{title}</h2>
-                <p className='text-accent text-sm'>{text}</p>
-            </div>
 
+            <SectionTitle title={title} text={text} />
             <div>
                 <ul className='flex items-center justify-center gap-8 mb-8'>
                     {categores.map((cat) => {

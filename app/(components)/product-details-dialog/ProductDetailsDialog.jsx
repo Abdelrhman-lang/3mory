@@ -34,11 +34,11 @@ export function ProductDetailsDialog() {
                                 <div className="flex flex-col gap-3.5 text-[16px]">
                                     <h4 className="uppercase font-semibold">Handbag feugiat</h4>
                                     <p className="text-secondary font-medium">$60.00</p>
-                                    <p className="text-accent">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae</p>
+                                    <p className="text-accent text-sm leading-[1.6]">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae</p>
 
                                     <div className="flex flex-col gap-2">
                                         <span className="uppercase font-medium">size</span>
-                                        <select className="p-2 border focus:outline-none">
+                                        <select className="p-2 border focus:outline-none text-sm">
                                             <option>s</option>
                                             <option>m</option>
                                             <option>l</option>
@@ -56,7 +56,7 @@ export function ProductDetailsDialog() {
                                         </select>
                                     </div>
                                     <div className="flex items-center justify-start gap-4">
-                                        <input type="number" className="w-[80px] h-[45px] border pl-2" value={1} />
+                                        <input type="number" className="w-[80px] h-[45px] border pl-2 text-sm" value={1} />
                                         <button className="bg-primary cursor-pointer h-[45px] w-[230px] text-white text-xs font-medium transition-colors duration-200 hover:bg-secondary">ADD TO CART</button>
                                     </div>
                                 </div>

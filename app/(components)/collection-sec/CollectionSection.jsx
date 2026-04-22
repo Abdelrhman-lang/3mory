@@ -13,10 +13,7 @@ export default function CollectionSection({ imgSrc, title, text, reverse }) {
                 <div className={`${reverse ? "order-1" : "order-2"}`}>
                     <CollectionProducts title={title} text={text} />
                 </div>
-
             </div>
-
-
         </section>
     )
 }

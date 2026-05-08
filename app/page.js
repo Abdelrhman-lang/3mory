@@ -1,11 +1,10 @@
-import Image from "next/image";
-import SubHeader from "./(components)/sub-header/SubHeader";
-import Header from "./(components)/header/Header";
-import Hero from "./(components)/hero/Hero";
-import CollectionSection from "./(components)/collection-sec/CollectionSection";
-import BannarSection from "./(components)/bannar-sec/BannarSection";
-import BlogSection from "./(components)/blog-sec/BlogSection";
-import FollowusSection from "./(components)/followus-sec/FollowusSection";
+import BannarSection from "./(components)/home/bannar-sec/BannarSection";
+import BlogSection from "./(components)/home/blog-sec/BlogSection";
+import CollectionSection from "./(components)/home/collection-sec/CollectionSection";
+import FollowusSection from "./(components)/home/followus-sec/FollowusSection";
+import Hero from "./(components)/home/hero/Hero";
+
+
 
 export default function Home() {
   return (

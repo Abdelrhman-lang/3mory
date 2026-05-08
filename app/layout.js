@@ -1,13 +1,14 @@
 import { Libre_Franklin } from "next/font/google";
 import "./globals.css";
-import Header from "./(components)/header/Header";
+import Header from "./(components)/layout/header/Header";
 import MenuProvider from "@/context/MenuContext";
 import CartProvider from "@/context/CartContext";
-import Cart from "./(components)/cart/Cart";
+import Cart from "./(components)/features/cart/Cart";
 import { ClerkProvider } from "@clerk/nextjs";
-import SubHeader from "./(components)/sub-header/SubHeader";
-import FixedArrow from "./(components)/fixed-arrow/FixedArrow";
-import Footer from "./(components)/footer/Footer";
+
+import FixedArrow from "./(components)/shared/fixed-arrow/FixedArrow";
+import Footer from "./(components)/layout/footer/Footer";
+import SubHeader from "./(components)/layout/sub-header/SubHeader";
 
 const libre = Libre_Franklin({
   subsets: ["latin"],

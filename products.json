@@ -1,0 +1,79 @@
+[
+    {
+        "id": 1,
+        "img": "/imgs/product1.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 2,
+        "img": "/imgs/product2.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 3,
+        "img": "/imgs/product3.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 4,
+        "img": "/imgs/product2.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 5,
+        "img": "/imgs/product1.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 6,
+        "img": "/imgs/product3.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 7,
+        "img": "/imgs/product2.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 8,
+        "img": "/imgs/product1.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 9,
+        "img": "/imgs/product3.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 10,
+        "img": "/imgs/product2.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    },
+    {
+        "id": 11,
+        "img": "/imgs/product1.webp",
+        "name": "Apple iPad with Retina",
+        "price": 60.00,
+        "oldPrice": ""
+    }
+]

@@ -9,7 +9,7 @@ const icons = [
 ]
 export default function GridControl({ gridOption, setGridOption }) {
     return (
-        <div className='flex items-center gap-5'>
+        <div className='md:flex items-center gap-5 hidden'>
             {icons.map((icon) => {
                 const isActive = gridOption === icon.value
                 return (

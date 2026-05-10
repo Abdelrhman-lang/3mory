@@ -1,7 +1,6 @@
 import React from 'react'
-import products from "../../../../../products.json"
 import ProductCard from '../product-card/ProductCard'
-export default function ProductsDisplay({ gridOption }) {
+export default function ProductsDisplay({ gridOption, products }) {
     const gridConfigs = {
         grid3: "md:grid-cols-3",
         grid4: "md:grid-cols-4",

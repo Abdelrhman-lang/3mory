@@ -16,6 +16,7 @@ import Quantity from "./Quantity";
 export function ProductDetailsDialog({ product }) {
     const [selectedSize, setSelectedSize] = useState(null)
     const [selectedMainImg, setSelectedMainImg] = useState(product.image)
+    const [selectedImage, setSelectedImage] = useState(null)
     const [quantity, setQuantity] = useState(1)
     useEffect(() => {
         if (selectedSize) {
@@ -53,11 +54,11 @@ export function ProductDetailsDialog({ product }) {
                                         {product.description}
                                     </DialogDescription>
                                     <Size product={product} setSelectedSize={setSelectedSize} selectedSize={selectedSize} />
-                                    <Color allProductsColors={allProductsColors} currentColors={currentColors} selectedSize={selectedSize} setSelectedMainImg={setSelectedMainImg} />
+                                    <Color allProductsColors={allProductsColors} currentColors={currentColors} selectedSize={selectedSize} setSelectedMainImg={setSelectedMainImg} setSelectedImage={setSelectedImage} selectedImage={selectedImage} />
                                     <div className="flex items-center justify-start gap-4 mt-5">
                                         <Quantity quantity={quantity} setQuantity={setQuantity} />
 
-                                        <button onClick={() => console.log(allProductsColors)} className="bg-primary cursor-pointer h-[45px] w-[230px] text-white text-xs font-medium transition-colors duration-200 hover:bg-secondary">ADD TO CART</button>
+                                        <button onClick={() => console.log(product)} className="bg-primary cursor-pointer h-[45px] w-[230px] text-white text-xs font-medium transition-colors duration-200 hover:bg-secondary">ADD TO CART</button>
                                     </div>
                                 </div>
                             </div>

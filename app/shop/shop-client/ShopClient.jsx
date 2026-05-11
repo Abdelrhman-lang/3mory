@@ -7,7 +7,7 @@ import Pagenation from '@/app/(components)/features/pagenation/Pagenation'
 import ProductsDisplay from '@/app/(components)/features/product/products-display/ProductsDisplay';
 import BreadcrumbBasic from '@/app/(components)/shared/breadcrumb/BreadcrumbBasic';
 import ShopHeader from '@/app/(components)/ui/shop-header/ShopHeader';
-export default function ShopClient({ products }) {
+export default function ShopClient({ products, allProducts }) {
     const [isFiltersActive, setIsFiltersActive] = useState(false)
     const [gridOption, setGridOption] = useState("grid3")
     const handleSort = (value) => {
@@ -26,7 +26,7 @@ export default function ShopClient({ products }) {
                     </div>
                     <aside className={`lg:col-span-3`}>
                         <div className='hidden lg:block'>
-                            <ShopFilter />
+                            <ShopFilter products={allProducts} />
                         </div>
                         <AnimatePresence>
                             {isFiltersActive && (
@@ -38,7 +38,7 @@ export default function ShopClient({ products }) {
                                     className="overflow-hidden lg:hidden"
                                 >
                                     <div className="py-5 border-b mb-5">
-                                        <ShopFilter />
+                                        <ShopFilter products={allProducts} />
                                     </div>
                                 </motion.div>
                             )}
@@ -48,6 +48,7 @@ export default function ShopClient({ products }) {
                         <ShopHeader onSortChange={handleSort} gridOption={gridOption} setGridOption={setGridOption} products={products} />
                         <ProductsDisplay gridOption={gridOption} products={products} />
                         <Pagenation />
+
                     </div>
                 </div>
             </div>

@@ -1,15 +1,15 @@
-"use client"
+
 import { FaShoppingCart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { ProductDetailsDialog } from "../product-details-dialog/ProductDetailsDialog";
-import { useState } from "react";
 
 
-export default function ProductCard({ product }) {
+
+export default function ProductCard({ product, isHome }) {
     return (
         <div>
             <div className='relative cursor-pointer overflow-hidden group'>
-                <img src={product.image} alt="product-img" />
+                <img src={product.image} alt="product-img" className="h-[323px] w-full" />
                 <div className='absolute top-2 -right-full transition-all duration-300 group-hover:right-2'>
                     <div className='flex flex-col gap-3'>
                         <FaShoppingCart className='text-accent transition-colors duration-200 hover:text-secondary' size={20} />

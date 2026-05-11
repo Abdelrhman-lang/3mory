@@ -2,7 +2,7 @@
 import CollectionImage from './CollectionImage'
 import CollectionProducts from './CollectionProducts'
 
-export default function CollectionSection({ imgSrc, title, text, reverse }) {
+export default function CollectionSection({ imgSrc, title, text, reverse, products }) {
     return (
         <section className='py-16 px-5 md:px-10'>
 
@@ -11,7 +11,7 @@ export default function CollectionSection({ imgSrc, title, text, reverse }) {
                     <CollectionImage collectionImgSrc={imgSrc} />
                 </div>
                 <div className={`${reverse ? "order-1" : "order-2"}`}>
-                    <CollectionProducts title={title} text={text} />
+                    <CollectionProducts title={title} text={text} products={products} />
                 </div>
             </div>
         </section>

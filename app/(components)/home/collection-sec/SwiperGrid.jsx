@@ -2,9 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/grid';
-
 import ProductCard from '../../features/product/product-card/ProductCard';
-
 export default function SwiperGrid({ products }) {
     return (
         <div>
@@ -31,7 +29,7 @@ export default function SwiperGrid({ products }) {
                 modules={[Grid, Navigation]}
                 className="mySwiper"
             >
-                {products.map((p) => {
+                {products?.map((p) => {
                     return (
                         <SwiperSlide key={p.id} >
                             <ProductCard product={p} />

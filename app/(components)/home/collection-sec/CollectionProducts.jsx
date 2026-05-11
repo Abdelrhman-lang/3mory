@@ -3,7 +3,6 @@
 import { useState } from "react"
 import SwiperGrid from "./SwiperGrid"
 import SectionTitle from "../../ui/sec-title/SectionTitle"
-import products from "../../../../products.json"
 
 const categores = [
     { id: 1, name: "Shoes", value: "shoes" },
@@ -11,7 +10,7 @@ const categores = [
 ]
 
 
-export default function CollectionProducts({ title, text }) {
+export default function CollectionProducts({ title, text, products }) {
     const [activeCat, setActiveCat] = useState("shoes")
     return (
         <div>

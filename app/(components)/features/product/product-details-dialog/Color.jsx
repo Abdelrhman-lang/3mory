@@ -3,7 +3,10 @@ import React from 'react'
 export default function Color({ selectedSize, allProductsColors, currentColors, setSelectedMainImg, selectedImage, setSelectedImage }) {
     return (
         <div className="flex flex-col gap-2">
-            <span className="uppercase font-medium">color</span>
+            <div className='flex items-center gap-24'>
+                <p className='uppercase font-medium'>color</p>
+                <p className='text-sm'>{selectedImage?.colorName}</p>
+            </div>
             {!selectedSize ? (
                 <ul className="flex items-center gap-5">
                     {allProductsColors.map((color) => {
@@ -32,7 +35,7 @@ export default function Color({ selectedSize, allProductsColors, currentColors, 
                             }}
                         >
                             {color.colorImage ? (
-                                <img src={color.colorImage} className={`w-[70px] h-[70px] rounded-md object-cover border ${selectedImage.id === color.id ? "border border-secondary" : ""}`} />
+                                <img src={color.colorImage} className={`w-[70px] h-[70px] rounded-md object-cover border ${selectedImage?.id === color.id ? "border border-secondary" : ""}`} />
                             ) : (
                                 <div style={{ backgroundColor: color.colorCode }} className="w-full h-full rounded-full" />
                             )}

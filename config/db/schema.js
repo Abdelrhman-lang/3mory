@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { integer, numeric, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import { integer, numeric, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -9,7 +9,7 @@ export const usersTable = pgTable("users", {
 });
 
 export const productsTable = pgTable("products", {
-    id: serial().primaryKey(),
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
     name: text("product_name").notNull(),
     newPrice: numeric("product_newPrice", { precision: 10, scale: 2 }).notNull(),
     oldPrice: numeric("product_oldPrice", { precision: 10, scale: 2 }),
@@ -22,17 +22,39 @@ export const productsTable = pgTable("products", {
 })
 
 export const sizesTable = pgTable("sizes", {
-    id: serial("id").primaryKey(),
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
     sizeValue: text("size_value").notNull(),
     productId: integer("product_id").references(() => productsTable.id, { onDelete: "cascade" }).notNull(),
 });
 
 export const colorsTable = pgTable("colors", {
-    id: serial("id").primaryKey(),
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
     colorName: text("color_name").notNull(),
     colorImage: text("color_image"),
     sizeId: integer("size_id").references(() => sizesTable.id, { onDelete: "cascade" }).notNull(),
 });
+
+export const cartTable = pgTable("cart", {
+    id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+    userEmail: text("user_email"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const cartItemsTable = pgTable("cart_items", {
+    id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+    cartId: integer("cart_id")
+        .references(() => cartTable.id, { onDelete: "cascade" })
+        .notNull(),
+    productId: integer("product_id")
+        .references(() => productsTable.id)
+        .notNull(),
+    name: text("product_name").notNull(),
+    price: numeric("product_price").notNull(),
+    quantity: integer("quantity").default(1).notNull(),
+    colorImage: text("color_image"),
+    colorValue: text("color_value"),
+    size: text("size"),
+})
 
 // Relations
 

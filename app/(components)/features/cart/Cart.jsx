@@ -1,26 +1,45 @@
 "use client"
 
-import { UseCart } from "@/context/CartContext"
-
-import { CircleX } from "lucide-react"
 import Overlay from "../../shared/overlay/Overlay"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { useUser } from "@clerk/nextjs"
+import { closeCart, deleteItemFromCart, getCartItems } from "@/RTK/slices/cartSlice"
+
+
+import CartHeader from "./cart-header/CartHeader"
+import CartItems from "./cart-items/CartItems"
+import CartPrices from "./cart-prices/CartPrices"
+import CartBtns from "./cart-btns/CartBtns"
 
 export default function Cart({ className }) {
-    const { isCartOpen, setIsCartOpen } = UseCart()
+    const dispatch = useDispatch()
+    const { items, isOpen, totalPrice } = useSelector((state) => state.cart)
+    const { user } = useUser()
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+    useEffect(() => {
+        if (userEmail) {
+            dispatch(getCartItems({ userEmail }))
+        }
+    }, [userEmail])
+    const vat = 10
+
     return (
         <>
-            <Overlay prop={isCartOpen} setProp={setIsCartOpen} />
-            <div className={`fixed top-0 ${isCartOpen ? "right-0" : "-right-full"} transition-all duration-500 w-3/4 lg:w-[350px] h-full bg-white shadow-md z-40 pt-10 px-7`}>
-                <div className="flex items-center justify-between">
-                    <h3>Your Cart</h3>
-                    <CircleX size={20} className="cursor-pointer transition-colors duration-300 hover:text-secondary" onClick={() => setIsCartOpen(false)} />
-                </div>
-
-                <div className="flex items-center justify-between mt-10">
-                    <div>image</div>
-                    <div>info</div>
-                    <div>delete</div>
-                </div>
+            <Overlay prop={isOpen} fn={() => dispatch(closeCart())} />
+            <div className={`overflow-y-scroll fixed top-0 ${isOpen ? "right-0" : "-right-full"} transition-all duration-500 w-3/4 lg:w-[400px] h-full bg-white shadow-md z-40 pt-10 px-7`}>
+                <CartHeader fn={() => dispatch(closeCart())} />
+                <CartItems deleteItemFromCart={deleteItemFromCart} dispatch={dispatch} userEmail={userEmail} items={items} />
+                {items?.length > 0 ? (
+                    <>
+                        <CartPrices totalPrice={totalPrice} vat={vat} />
+                        <CartBtns />
+                    </>
+                ) : (
+                    <div className="flex items-center justify-center min-h-1/2">
+                        <p className="capitalize">Your Cart is Empty add some products</p>
+                    </div>
+                )}
             </div>
         </>
 

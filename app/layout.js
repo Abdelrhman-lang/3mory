@@ -2,13 +2,13 @@ import { Libre_Franklin } from "next/font/google";
 import "./globals.css";
 import Header from "./(components)/layout/header/Header";
 import MenuProvider from "@/context/MenuContext";
-import CartProvider from "@/context/CartContext";
 import Cart from "./(components)/features/cart/Cart";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import FixedArrow from "./(components)/shared/fixed-arrow/FixedArrow";
 import Footer from "./(components)/layout/footer/Footer";
 import SubHeader from "./(components)/layout/sub-header/SubHeader";
+import { ReduxProvider } from "@/RTK/store/Provider";
 
 const libre = Libre_Franklin({
   subsets: ["latin"],
@@ -23,22 +23,28 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${libre.className} h-full antialiased`}>
-        <body className="min-h-full flex flex-col">
-          <MenuProvider>
-            <CartProvider>
+      <ReduxProvider>
+        <html lang="en" className={`${libre.className} h-full antialiased`}>
+          <body className="min-h-full flex flex-col">
+            <MenuProvider>
+
               <FixedArrow />
               <Cart />
               <SubHeader />
               <Header />
               <main className="flex-1">
+
                 {children}
+
+
               </main>
               <Footer />
-            </CartProvider>
-          </MenuProvider>
-        </body>
-      </html>
+
+            </MenuProvider>
+          </body>
+        </html>
+      </ReduxProvider>
+
     </ClerkProvider>
   );
 }

@@ -8,20 +8,7 @@ export default function Color({ selectedSize, allProductsColors, currentColors, 
                 <p className='text-sm'>{selectedImage?.colorName}</p>
             </div>
             {!selectedSize ? (
-                <ul className="flex items-center gap-5">
-                    {allProductsColors.map((color) => {
-
-                        return (
-                            <li key={color.id} onClick={() => {
-                                setSelectedMainImg(color.colorImage)
-                                setSelectedImage(color)
-                            }}>
-                                <img src={color.colorImage} alt="colorImage" className={`object-cover w-[70px] h-[70px] rounded-md ${selectedImage?.id === color.id ? "border border-secondary" : ""}`} />
-                            </li>
-                        )
-                    })}
-
-                </ul>
+                <p className='text-accent font-bold capitalize'>please select size to show avilable colos</p>
             ) : currentColors.length > 0 ? (
                 <ul className="flex items-center gap-5">
                     {currentColors.map((color) => (

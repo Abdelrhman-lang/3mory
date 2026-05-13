@@ -37,7 +37,7 @@ export default function Cart({ className }) {
                     </>
                 ) : (
                     <div className="flex items-center justify-center min-h-1/2">
-                        <p className="capitalize">Your Cart is Empty add some products</p>
+                        <p className="capitalize text-sm text-center md:text-lg">Your Cart is Empty add some products</p>
                     </div>
                 )}
             </div>

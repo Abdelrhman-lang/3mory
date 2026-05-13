@@ -38,7 +38,6 @@ export function ProductDetailsDialog({ product }) {
             name: product.name,
             price: product.newPrice,
             quantity: quantity,
-            userEmail,
             colorImage: selectedImage.colorImage,
             colorValue: selectedImage.colorName,
             size: selectedSize.sizeValue

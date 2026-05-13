@@ -1,7 +1,9 @@
 "use client"
-import { useMenu } from "@/context/MenuContext"
+
+import { closeMenu } from "@/RTK/slices/menuSlice"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useDispatch, useSelector } from "react-redux"
 
 const links = [
     { id: 1, title: "Home", href: "/" },
@@ -13,14 +15,15 @@ const links = [
 
 export default function HeaderLinks({ ulClassName, liClassname, listStyle, divPosition }) {
     const pathname = usePathname()
-    const { setIsMenuOpen } = useMenu()
+    const dispatch = useDispatch()
+    const { isMenuOpen } = useSelector((state) => state.menu)
     return (
         <div className={divPosition}>
             <ul className={ulClassName}>
                 {links.map((link) => {
                     const isActive = pathname === link.href
                     return (
-                        <li key={link.id} className={`${listStyle} `} onClick={() => setIsMenuOpen(false)}>
+                        <li key={link.id} className={`${listStyle} `} onClick={() => dispatch(closeMenu())}>
                             <Link href={link.href} className={`transition-colors duration-300  ${isActive ? "text-secondary font-bold" : liClassname} ${liClassname}`}>{link.title}</Link>
                         </li>
                     )

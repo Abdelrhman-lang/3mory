@@ -14,7 +14,7 @@ export default function Footer() {
         { id: 4, icon: TiSocialYoutubeCircular },
     ]
     return (
-        <footer className=''>
+        <footer className='pt-10'>
             <div className="border-b pb-16">
                 <div className='custom-container'>
                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8'>

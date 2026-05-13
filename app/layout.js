@@ -1,7 +1,7 @@
 import { Libre_Franklin } from "next/font/google";
 import "./globals.css";
 import Header from "./(components)/layout/header/Header";
-import MenuProvider from "@/context/MenuContext";
+
 import Cart from "./(components)/features/cart/Cart";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -26,21 +26,21 @@ export default function RootLayout({ children }) {
       <ReduxProvider>
         <html lang="en" className={`${libre.className} h-full antialiased`}>
           <body className="min-h-full flex flex-col">
-            <MenuProvider>
-
-              <FixedArrow />
-              <Cart />
-              <SubHeader />
-              <Header />
-              <main className="flex-1">
-
-                {children}
 
 
-              </main>
-              <Footer />
+            <FixedArrow />
+            <Cart />
+            <SubHeader />
+            <Header />
+            <main className="flex-1">
 
-            </MenuProvider>
+              {children}
+
+
+            </main>
+            <Footer />
+
+
           </body>
         </html>
       </ReduxProvider>

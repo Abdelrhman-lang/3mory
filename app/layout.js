@@ -26,25 +26,17 @@ export default function RootLayout({ children }) {
       <ReduxProvider>
         <html lang="en" className={`${libre.className} h-full antialiased`}>
           <body className="min-h-full flex flex-col">
-
-
             <FixedArrow />
             <Cart />
             <SubHeader />
             <Header />
             <main className="flex-1">
-
               {children}
-
-
             </main>
             <Footer />
-
-
           </body>
         </html>
       </ReduxProvider>
-
     </ClerkProvider>
   );
 }

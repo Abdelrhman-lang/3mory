@@ -28,79 +28,82 @@ export default function CartClient() {
 
     const shipping = 50
     return (
-        <section>
+        <section className="w-fuull overflow-hidden">
             <div className="custom-container">
                 <BreadcrumbBasic page="Cart" />
 
                 {items.length > 0 ? (
-                    <div className="mt-12 overflow-x-auto">
-                        <table className="w-full">
-                            <thead className="border bg-[#f2f2f2]">
-                                <tr className="border">
-                                    {tableHeads.map((tb) => {
+                    <div className="mt-12 w-full">
+                        <div className="overflow-x-scroll xl:overflow-hidden">
+                            <table className="w-full min-w-[1000px]">
+                                <thead className="border bg-[#f2f2f2]">
+                                    <tr className="border">
+                                        {tableHeads.map((tb) => {
+                                            return (
+                                                <th key={tb.id} className="border-b-4 border-b-secondary text-accent font-semibold uppercase p-2.5 text-center">
+                                                    {tb.title}
+                                                </th>
+                                            )
+                                        })}
+                                    </tr>
+                                </thead>
+                                <tbody className="">
+                                    {items.map((item) => {
                                         return (
-                                            <th key={tb.id} className="border-b-4 border-b-secondary text-accent font-semibold uppercase p-2.5 text-center">
-                                                {tb.title}
-                                            </th>
+                                            <tr className="border-b border-l text-center" key={item.id}>
+                                                {/* Delete */}
+                                                <td className={tdStyle}>
+                                                    <div className={centerItems}>
+                                                        <FaRegTrashAlt size={20} className="text-red-500 cursor-pointer" onClick={() => dispatch(deleteItemFromCart({ itemId: item.id, userEmail }))} />
+                                                    </div>
+                                                </td>
+
+                                                {/* Image */}
+                                                <td className={tdStyle}>
+                                                    <div className={centerItems}>
+                                                        <Image src={item.colorImage} alt={item.name} width={85} height={95} className="object-cover" />
+                                                    </div>
+                                                </td>
+
+                                                {/* Name */}
+                                                <td className={tdStyle}>
+                                                    <div className={centerItems}>
+                                                        <p className={textStyle}>{item.name}</p>
+                                                    </div>
+                                                </td>
+
+                                                {/* Color */}
+                                                <td className={tdStyle}>
+                                                    <div className={centerItems}>
+                                                        <p className={textStyle}>{item.colorValue}</p>
+                                                    </div>
+                                                </td>
+
+                                                {/* Price */}
+                                                <td className={tdStyle}>
+                                                    <div className={centerItems}>
+                                                        <p className="text-secondary text-lg font-semibold">${item.price}</p>
+                                                    </div>
+                                                </td>
+                                                {/* Quantity */}
+                                                <td className={tdStyle}>
+                                                    <div className={centerItems}>
+                                                        <p className={textStyle}>{item.quantity}</p>
+                                                    </div>
+                                                </td>
+                                                {/* Total Item Price */}
+                                                <td className={tdStyle}>
+                                                    <div className={centerItems}>
+                                                        <p className="text-secondary text-lg font-semibold">${item.quantity * item.price}</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         )
                                     })}
-                                </tr>
-                            </thead>
-                            <tbody className="">
-                                {items.map((item) => {
-                                    return (
-                                        <tr className="border-b border-l text-center" key={item.id}>
-                                            {/* Delete */}
-                                            <td className={tdStyle}>
-                                                <div className={centerItems}>
-                                                    <FaRegTrashAlt size={20} className="text-red-500 cursor-pointer" onClick={() => dispatch(deleteItemFromCart({ itemId: item.id, userEmail }))} />
-                                                </div>
-                                            </td>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                            {/* Image */}
-                                            <td className={tdStyle}>
-                                                <div className={centerItems}>
-                                                    <Image src={item.colorImage} alt={item.name} width={85} height={95} className="object-cover" />
-                                                </div>
-                                            </td>
-
-                                            {/* Name */}
-                                            <td className={tdStyle}>
-                                                <div className={centerItems}>
-                                                    <p className={textStyle}>{item.name}</p>
-                                                </div>
-                                            </td>
-
-                                            {/* Color */}
-                                            <td className={tdStyle}>
-                                                <div className={centerItems}>
-                                                    <p className={textStyle}>{item.colorValue}</p>
-                                                </div>
-                                            </td>
-
-                                            {/* Price */}
-                                            <td className={tdStyle}>
-                                                <div className={centerItems}>
-                                                    <p className="text-secondary text-lg font-semibold">${item.price}</p>
-                                                </div>
-                                            </td>
-                                            {/* Quantity */}
-                                            <td className={tdStyle}>
-                                                <div className={centerItems}>
-                                                    <p className={textStyle}>{item.quantity}</p>
-                                                </div>
-                                            </td>
-                                            {/* Total Item Price */}
-                                            <td className={tdStyle}>
-                                                <div className={centerItems}>
-                                                    <p className="text-secondary text-lg font-semibold">${item.quantity * item.price}</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
 
                         <div className="mt-12">
                             <div className="grid grid-cols-1 md:grid-cols-12">

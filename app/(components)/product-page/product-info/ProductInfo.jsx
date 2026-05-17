@@ -31,6 +31,9 @@ export default function ProductInfo({ uniqueProduct, product, setSelectedColor, 
             colorValue: selectedColor,
             size: selectedSize
         }))
+        setQuantity(1)
+        setSelectedSize(null)
+        setSelectedColor(null)
     }
     return (
         <div className="space-y-4">

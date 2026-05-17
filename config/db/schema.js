@@ -56,6 +56,24 @@ export const cartItemsTable = pgTable("cart_items", {
     size: text("size"),
 })
 
+export const orderTable = pgTable("order", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    userEmail: text("user_email").notNull(),
+    totalPrice: numeric("total_price", { precision: 10, scale: 2 }).notNull(),
+    status: text("order_status").default("pending"),
+    createdAt: timestamp("created_at").defaultNow().notNull()
+})
+export const orderItemsTable = pgTable("order_items", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    orderId: integer("order_id").references(() => orderTable.id, { onDelete: "cascade" }).notNull(),
+    productId: integer("product_id").notNull(),
+    productName: text("product_name").notNull(),
+    color: text("color"),
+    size: text("size"),
+    price: numeric("price", { precision: 10, scale: 2 }).notNull(),
+    quantity: integer("quantity").notNull()
+})
+
 // Relations
 
 // 1- product relation

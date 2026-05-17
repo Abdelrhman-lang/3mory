@@ -11,7 +11,7 @@ import { toggleMenu } from '@/RTK/slices/menuSlice'
 
 
 export default function HeaderTop() {
-    // const { setIsMenuOpen, isMenuOpen } = useMenu()
+    const { items } = useSelector((state) => state.cart)
     const dispatch = useDispatch()
     return (
         <div className='pt-10 pb-5'>
@@ -23,7 +23,8 @@ export default function HeaderTop() {
                     <div className='border border-primary p-2 rounded-sm cursor-pointer transition-colors duration-300 hover:text-secondary hover:border-secondary text-accent'>
                         <Menu size={20} onClick={() => dispatch(toggleMenu())} />
                     </div>
-                    <div className='border border-primary p-2 rounded-sm cursor-pointer transition-colors duration-300 hover:text-secondary hover:border-secondary text-accent ' onClick={() => dispatch(toggleCart())}>
+                    <div className='border border-primary p-2 rounded-sm cursor-pointer transition-colors duration-300 hover:text-secondary hover:border-secondary text-accent relative' onClick={() => dispatch(toggleCart())}>
+                        <div className='absolute -bottom-2 -right-2 w-[20px] h-[20px] rounded-full bg-secondary text-white flex items-center justify-center text-[13px]'>{items.length}</div>
                         <FaShoppingCart size={20} />
                     </div>
                 </div>

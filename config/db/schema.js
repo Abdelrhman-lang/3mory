@@ -3,8 +3,10 @@ import { integer, numeric, pgTable, serial, text, timestamp, varchar } from "dri
 
 export const usersTable = pgTable("users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    name: varchar({ length: 255 }).notNull(),
-    age: integer().notNull(),
+    firstName: varchar({ length: 255 }).notNull(),
+    lastName: varchar({ length: 255 }).notNull(),
+    address: varchar({ length: 255 }).notNull(),
+    phoneNumber: integer().notNull(),
     email: varchar({ length: 255 }).notNull().unique(),
 });
 
@@ -71,9 +73,24 @@ export const orderItemsTable = pgTable("order_items", {
     color: text("color"),
     size: text("size"),
     price: numeric("price", { precision: 10, scale: 2 }).notNull(),
-    quantity: integer("quantity").notNull()
+    quantity: integer("quantity").notNull(),
+    image: text().notNull()
 })
-
+export const wishlistTable = pgTable("wishlist", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    userEmail: text("user_email").notNull(),
+})
+export const wishlistItemsTable = pgTable("wishlist_items", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    wishlistId: integer("wishlist_id").references(() => wishlistTable.id, { onDelete: "cascade" }).notNull(),
+    productId: integer("product_id").notNull(),
+    productName: text("product_name").notNull(),
+    color: text("color"),
+    size: text("size"),
+    price: numeric("price", { precision: 10, scale: 2 }).notNull(),
+    quantity: integer("quantity"),
+    image: text().notNull()
+})
 // Relations
 
 // 1- product relation

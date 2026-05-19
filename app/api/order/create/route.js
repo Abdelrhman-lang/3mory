@@ -28,16 +28,13 @@ export async function POST(req) {
             color: item.colorValue,
             size: item.size,
             price: item.price,
-            quantity: item.quantity
+            quantity: item.quantity,
+            image: item.colorImage
         }))
 
         await db.insert(orderItemsTable).values(orderItems)
 
-        // for (const item of items) {
-        //     await db.update(productsTable).set({
-        //         quantity: sql`${productsTable.quantity} - ${item.quantity}`
-        //     }).where(eq(productsTable.id, item.productId))
-        // }
+
 
         await db.delete(cartTable).where(eq(cartTable.userEmail, userEmail))
 

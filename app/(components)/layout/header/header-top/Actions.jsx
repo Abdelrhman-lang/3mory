@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getCartItems, toggleCart } from "@/RTK/slices/cartSlice";
+import { User } from "lucide-react";
 
 export default function Actions({ className }) {
 
@@ -23,7 +24,11 @@ export default function Actions({ className }) {
     return (
         <div className={`${className} lg:flex lg:w-1/4 justify-end`}>
             <div className='flex flex-col lg:flex-row gap-3 items-center lg:gap-5'>
-                {isSignedIn ? <UserButton /> : <div>
+                {isSignedIn ? <UserButton>
+                    <UserButton.MenuItems>
+                        <UserButton.Link href="/user-account" label="View My Account" labelIcon={<User className="w-4 h-4" />} />
+                    </UserButton.MenuItems>
+                </UserButton> : <div>
                     <ul className='flex items-center gap-3 text-primary text-xs'>
                         <li className="transition-colors duration-300 hover:text-secondary">
                             <Link href={"/sign-in"}>Login</Link>

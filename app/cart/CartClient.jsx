@@ -46,7 +46,6 @@ export default function CartClient() {
             <div className="custom-container">
                 <BreadcrumbBasic page="Cart" />
 
-
                 {items.length > 0 ? (
                     <div className="mt-12 w-full">
                         <div className="overflow-x-scroll xl:overflow-hidden">

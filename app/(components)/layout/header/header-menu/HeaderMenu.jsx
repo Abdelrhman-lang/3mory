@@ -1,17 +1,18 @@
 "use client"
-import { CircleX } from 'lucide-react'
+import { CircleX, User } from 'lucide-react'
 import React from 'react'
 import HeaderLinks from '../header-links/HeaderLinks'
 import SocialmediaLinks from '../../../features/socialmedia-links/SocialmediaLinks'
 import Overlay from '../../../shared/overlay/Overlay'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeMenu } from '@/RTK/slices/menuSlice'
+import { UserButton, useUser } from '@clerk/nextjs'
 
 
 export default function HeaderMenu() {
     const dispatch = useDispatch()
     const { isMenuOpen } = useSelector((state) => state.menu)
-
+    const { isSignedIn } = useUser()
 
     return (
         <div className='lg:hidden'>
@@ -29,6 +30,14 @@ export default function HeaderMenu() {
                 <div className='mt-8 text-center'>
                     <a href="mailto:abdokhaled766@gmail.com" className='text-sm text-accent'>abdokhaled766@gmail.com</a>
                     <SocialmediaLinks />
+                </div>
+
+                <div className='absolute bottom-10 left-5'>
+                    {isSignedIn ? <UserButton>
+                        <UserButton.MenuItems>
+                            <UserButton.Link href='/user-account' labelIcon={<User className='w-4 h-4' />} label='View My Account' />
+                        </UserButton.MenuItems>
+                    </UserButton> : ""}
                 </div>
             </div>
         </div>

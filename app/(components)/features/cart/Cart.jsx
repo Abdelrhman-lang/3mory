@@ -5,13 +5,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
 import { closeCart, deleteItemFromCart, getCartItems } from "@/RTK/slices/cartSlice"
-
-
 import CartHeader from "./cart-header/CartHeader"
 import CartItems from "./cart-items/CartItems"
 import CartPrices from "./cart-prices/CartPrices"
 import CartBtns from "./cart-btns/CartBtns"
-import { createOrder } from "@/RTK/slices/orderSlice"
 import { Spinner } from "@/components/ui/spinner"
 
 export default function Cart({ className }) {
@@ -40,7 +37,7 @@ export default function Cart({ className }) {
                     ) : (
                         <>
                             <CartPrices totalPrice={totalPrice} vat={vat} />
-                            <CartBtns fn={() => dispatch(createOrder({ userEmail, items, totalPrice }))} />
+                            <CartBtns />
                         </>
                     )
                 ) : (

@@ -4,6 +4,7 @@ import SecondartBtn from '../../../ui/secondary-btn/SecondartBtn'
 const menu = [
     { id: 1, title: "account details", value: "accountDetails" },
     { id: 2, title: "orders", value: "orders" },
+    { id: 3, title: "wishlist", value: "wishlist" },
 ]
 export default function UserAccountMenu({ activeBtn, setActiveBtn }) {
 

@@ -4,7 +4,8 @@ import UserAccountMenu from '../(components)/layout/user-account/menu/UserAccoun
 import BreadcrumbBasic from '../(components)/shared/breadcrumb/BreadcrumbBasic'
 import AccountDetails from '../(components)/layout/user-account/content/account-details/AccountDetails'
 import Orders from '../(components)/layout/user-account/content/orders/Orders'
-export default function UserAccountClient({ user, userOrders }) {
+import Wishlist from '../(components)/layout/user-account/content/wishlist/Wishlist'
+export default function UserAccountClient({ user, userOrders, wishlistItems }) {
     const [activeBtn, setActiveBtn] = useState("accountDetails")
     return (
         <section className='pb-10'>
@@ -17,7 +18,7 @@ export default function UserAccountClient({ user, userOrders }) {
                             <UserAccountMenu activeBtn={activeBtn} setActiveBtn={setActiveBtn} />
                         </div>
                         <div className='md:col-span-9'>
-                            {activeBtn === "accountDetails" ? <AccountDetails user={user} userOrders={userOrders} /> : activeBtn === "orders" ? <Orders userOrders={userOrders} /> : null}
+                            {activeBtn === "accountDetails" ? <AccountDetails user={user} userOrders={userOrders} /> : activeBtn === "orders" ? <Orders userOrders={userOrders} /> : activeBtn === "wishlist" ? <Wishlist wishlistItems={wishlistItems} /> : null}
                         </div>
                     </div>
                 </div>

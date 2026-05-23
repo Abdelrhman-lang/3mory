@@ -81,7 +81,7 @@ export default function AccountDetails({ user, userOrders }) {
                             <td className={tdStyle}>
                                 <div className={centerItems}>
                                     <p className={textStyle} onClick={() => console.log(user)}>
-                                        {userOrders.length}
+                                        {userOrders?.length}
                                     </p>
                                 </div>
                             </td>

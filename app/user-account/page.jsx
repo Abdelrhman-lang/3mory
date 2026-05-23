@@ -3,14 +3,15 @@ import { getUserOrders } from '@/services/orders/getUserOrders';
 import UserAccountClient from './UserAccountClient'
 import { getUser } from '@/services/user/getUser'
 import { currentUser } from "@clerk/nextjs/server"
+import { getWishlist } from '@/services/wishlist/get/getWishlist';
 export default async function page() {
 
     const clerkUser = await currentUser()
     const userEmail = clerkUser?.primaryEmailAddress?.emailAddress;
     const user = await getUser(userEmail);
     const userOrders = await getUserOrders(userEmail)
-
+    const wishlistItems = await getWishlist(userEmail)
     return (
-        <UserAccountClient user={user} userOrders={userOrders} />
+        <UserAccountClient user={user} userOrders={userOrders} wishlistItems={wishlistItems} />
     )
 }

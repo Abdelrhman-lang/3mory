@@ -6,7 +6,7 @@ import { NextResponse } from "next/server"
 export async function POST(req) {
     try {
         const body = await req.json()
-        const { userEmail, items, totalPrice } = body
+        const { userEmail, items, totalPrice, note } = body
 
         if (!userEmail || !items || items.length === 0) {
             return NextResponse.json({ error: "Missing required data" }, { status: 400 })
@@ -16,7 +16,8 @@ export async function POST(req) {
         const [order] = await db.insert(orderTable).values({
             userEmail,
             totalPrice,
-            status: "pending"
+            status: "pending",
+            note: note || null
         }).returning({ insertedId: orderTable.id })
 
         const orderId = order.insertedId

@@ -1,42 +1,48 @@
 
-export default function CheckoutDetails() {
+"use client"
+import { updateUser } from "@/services/user/updateUser"
+import { useState } from "react"
+import Swal from "sweetalert2"
+
+export default function CheckoutDetails({ formData,  handelInputChange}) {
     const labelStyle = "text-sm capitalize text-accent"
     const inputStyle = "border focus:outline-0 px-4 py-2 text-sm text-accent"
     const divStyle = "flex flex-col gap-2"
+
     return (
         <div className='space-y-3'>
             <h3 className='bg-primary text-white uppercase font-semibold p-2'>
                 billing details
             </h3>
 
-            <form action="#" className='space-y-5'>
+            <form className='space-y-5'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                     <div className={divStyle}>
-                        <label htmlFor="" className={labelStyle}>first name</label>
-                        <input type="text" className={inputStyle} />
+                        <label htmlFor="firstName" className={labelStyle}>first name</label>
+                        <input type="text" className={inputStyle} name="firstName" value={formData.firstName} onChange={handelInputChange} required disabled />
                     </div>
                     <div className={divStyle}>
-                        <label htmlFor="" className={labelStyle}>last name</label>
-                        <input type="text" className={inputStyle} />
+                        <label htmlFor="lastName" className={labelStyle}>last name</label>
+                        <input type="text" className={inputStyle} name="lastName" value={formData.lastName} onChange={handelInputChange} required />
                     </div>
                 </div>
 
                 <div className={divStyle}>
-                    <label htmlFor="" className={labelStyle}>email</label>
-                    <input type="email" className={inputStyle} />
+                    <label htmlFor="email" className={labelStyle}>email</label>
+                    <input type="email" className={inputStyle} name="email" value={formData.email} onChange={handelInputChange} required disabled />
                 </div>
                 <div className={divStyle}>
-                    <label htmlFor="" className={labelStyle}>phone</label>
-                    <input type="number" className={inputStyle} />
+                    <label htmlFor="phoneNumber" className={labelStyle}>phone</label>
+                    <input type="number" className={inputStyle} name="phoneNumber" value={formData.phoneNumber} onChange={handelInputChange} required />
                 </div>
                 <div className={divStyle}>
-                    <label htmlFor="" className={labelStyle}>address</label>
-                    <input type="text" className={inputStyle} />
+                    <label htmlFor="address" className={labelStyle}>address</label>
+                    <input type="text" className={inputStyle} name="address" value={formData.address} onChange={handelInputChange} required />
                 </div>
 
                 <div className={divStyle}>
-                    <label htmlFor="" className={labelStyle}>any notes</label>
-                    <textarea className={inputStyle} />
+                    <label htmlFor="note" className={labelStyle}>any notes</label>
+                    <textarea className={inputStyle} name="note" value={formData.note} onChange={handelInputChange}/>
                 </div>
             </form>
         </div>

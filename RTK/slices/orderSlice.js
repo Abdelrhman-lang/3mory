@@ -3,12 +3,13 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { getCartItems } from "./cartSlice";
 
-export const createOrder = createAsyncThunk("order/createOrder", async ({ userEmail, items, totalPrice }, thunkApi) => {
+export const createOrder = createAsyncThunk("order/createOrder", async ({ userEmail, items, totalPrice, note }, thunkApi) => {
     try {
         const res = await axios.post(`/api/order/create`, {
             userEmail,
             items: items,
-            totalPrice: totalPrice
+            totalPrice: totalPrice,
+            note: note
         })
 
         if (res.data.success) {

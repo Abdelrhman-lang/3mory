@@ -5,8 +5,8 @@ export const usersTable = pgTable("users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     firstName: varchar({ length: 255 }).notNull(),
     lastName: varchar({ length: 255 }).notNull(),
-    address: varchar({ length: 255 }).notNull(),
-    phoneNumber: integer().notNull(),
+    address: varchar({ length: 255 }),
+    phoneNumber: integer(),
     email: varchar({ length: 255 }).notNull().unique(),
 });
 
@@ -63,7 +63,8 @@ export const orderTable = pgTable("order", {
     userEmail: text("user_email").notNull(),
     totalPrice: numeric("total_price", { precision: 10, scale: 2 }).notNull(),
     status: text("order_status").default("pending"),
-    createdAt: timestamp("created_at").defaultNow().notNull()
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    note: text("order_note")
 })
 export const orderItemsTable = pgTable("order_items", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),

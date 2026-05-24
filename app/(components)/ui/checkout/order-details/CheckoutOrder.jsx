@@ -7,7 +7,8 @@ const tableHeads = [
     { id: 2, title: "total" },
 ]
 const shipping = 50
-export default function CheckoutOrder({ items, totalPrice }) {
+export default function CheckoutOrder({ items, totalPrice, handelPlaceOrder, loading }) {
+    
     return (
         <div className='space-y-3'>
             <h3 className='bg-primary text-white uppercase font-semibold p-2'>
@@ -23,7 +24,7 @@ export default function CheckoutOrder({ items, totalPrice }) {
                     </thead>
                     <tbody>
                         {items.map((item) => {
-                            return <tr className="border">
+                            return <tr key={item.id} className="border">
                                 {/* name */}
                                 <td className="p-2 text-center border-r text-sm">{item?.name} <span className="text-xs font-bold">x{item.quantity}</span></td>
                                 <td className="text-center text-sm">${item.price * item?.quantity}</td>
@@ -45,7 +46,7 @@ export default function CheckoutOrder({ items, totalPrice }) {
                     </tbody>
                 </table>
                 <div className="mt-12 flex justify-end">
-                    <SecondartBtn title={"place order"} className={"px-4 py-2 rounded-[3px]"} />
+                    <SecondartBtn title={"place order"} className={"px-4 py-2 rounded-[3px]"} onClick={handelPlaceOrder} loading={loading} />
                 </div>
             </div>
         </div>

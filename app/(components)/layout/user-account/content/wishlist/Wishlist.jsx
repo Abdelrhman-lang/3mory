@@ -33,7 +33,7 @@ export default function Wishlist({ wishlistItems }) {
                     </thead>
                     <tbody>
                         {wishlistItems.map((item) => {
-                            return <tr className="border-b border-l text-center">
+                            return <tr key={item.id} className="border-b border-l text-center">
                                 {/* Delete */}
                                 <td className={tdStyle}>
                                     <div className={centerItems}>

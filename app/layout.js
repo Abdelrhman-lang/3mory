@@ -9,6 +9,7 @@ import FixedArrow from "./(components)/shared/fixed-arrow/FixedArrow";
 import Footer from "./(components)/layout/footer/Footer";
 import SubHeader from "./(components)/layout/sub-header/SubHeader";
 import { ReduxProvider } from "@/RTK/store/Provider";
+import UserSync from "./(components)/features/user/user-sync/page";
 
 const libre = Libre_Franklin({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       <ReduxProvider>
         <html lang="en" className={`${libre.className} h-full antialiased`}>
           <body className="min-h-full flex flex-col">
+            <UserSync />
             <FixedArrow />
             <Cart />
             <SubHeader />

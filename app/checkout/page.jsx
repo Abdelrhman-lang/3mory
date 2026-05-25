@@ -7,7 +7,6 @@ export default async function page() {
     const clerkUser = await currentUser()
     const userEmail = clerkUser?.emailAddresses?.[0]?.emailAddress
     const userData = await getUser(userEmail)
-
     console.log("USER_DATA", userData)
     return (
         <CheckoutClient user={userData}/>

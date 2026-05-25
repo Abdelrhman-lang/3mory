@@ -1,8 +1,6 @@
 
-"use client"
-import { updateUser } from "@/services/user/updateUser"
-import { useState } from "react"
-import Swal from "sweetalert2"
+
+
 
 export default function CheckoutDetails({ formData,  handelInputChange}) {
     const labelStyle = "text-sm capitalize text-accent"

@@ -1,17 +1,18 @@
 "use client"
-import { useDispatch, useSelector } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
 import BreadcrumbBasic from '../(components)/shared/breadcrumb/BreadcrumbBasic'
 import CheckoutDetails from '../(components)/ui/checkout/details/CheckoutDetails'
 import CheckoutOrder from '../(components)/ui/checkout/order-details/CheckoutOrder'
 import { useEffect, useState } from 'react'
 import { getCartItems } from '@/RTK/slices/cartSlice'
 
-import { createOrder } from '@/RTK/slices/orderSlice'
 import Swal from 'sweetalert2'
-import { updateUser } from '@/services/user/updateUser'
+import { placeOrder } from '@/services/orders/create/placeOrder'
 
 
 export default function CheckoutClient({user}) {
+        const dispatch = useDispatch()
+        const { items, totalPrice, loading: cartLoading } = useSelector((state) => state.cart)
         const userEmail = user?.email
         const [formData, setFormData] = useState({
         firstName: user?.firstName,
@@ -37,17 +38,15 @@ export default function CheckoutClient({user}) {
         setLoading(true)
         try {
             // Update user details
-            const updatedUser = await updateUser(userEmail, formData.phoneNumber, formData.address)
-            
-            // create order
-            const placeOrderResult = await dispatch(createOrder({
-                userEmail: user?.email,
+            const result = await placeOrder({
+                userEmail: userEmail,
                 items: items,
                 totalPrice: totalPrice,
-                note: formData.note
-            }))
-
-            if(updatedUser.success && placeOrderResult?.payload?.success) {
+                note: formData.note,
+                phoneNumber: formData.phoneNumber,
+                address: formData.address
+            })
+            if(result?.success) {
                 Swal.fire({
                     icon: "success",
                     title: "Order Placed",
@@ -57,25 +56,24 @@ export default function CheckoutClient({user}) {
                     toast: true,
                     position: "top-end",
                 })
+                dispatch(getCartItems({ userEmail }))
             } else {
                 Swal.fire({
                     icon: "error",
                     title: "Order Failed",
-                    text: "Failed to place order. Please try again.",
+                    text: result?.error || "Failed to place order. Please try again.",
                 })
             }
         } catch (error) {
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "Failed to connect to server",
+                text: error?.message || "An error occurred while placing your order. Please try again.",
             })
         } finally {
             setLoading(false)
         }
     }
-    const { items, totalPrice, loading: cartLoading } = useSelector((state) => state.cart)
-    const dispatch = useDispatch()
     
     useEffect(() => {
         dispatch(getCartItems({ userEmail }))

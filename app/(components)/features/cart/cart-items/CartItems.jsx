@@ -1,6 +1,8 @@
+"use client"
 import { FaTrash } from "react-icons/fa6";
 
-export default function CartItems({ items, dispatch, deleteItemFromCart, userEmail }) {
+export default function CartItems({ items,  userEmail, dispatch, handleDeleteItemFromCart }) {
+    
     return (
         <div className="flex flex-col gap-5 mt-10">
             {items.map((item) => {
@@ -29,7 +31,7 @@ export default function CartItems({ items, dispatch, deleteItemFromCart, userEma
                         </div>
 
                         <div className="cursor-pointer">
-                            <button onClick={() => dispatch(deleteItemFromCart({ itemId: item.id, userEmail }))}>
+                            <button onClick={() => handleDeleteItemFromCart(item.id, userEmail)}>
                                 <FaTrash size={20} className="text-red-500" />
                             </button>
                         </div>

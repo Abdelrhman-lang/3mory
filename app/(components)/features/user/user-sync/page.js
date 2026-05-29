@@ -14,10 +14,7 @@ export default function UserSync() {
             try {
                 hasSynced.current = true
                 const result = await postUser()
-
-                if(result.success) {
-                    console.log("User sync successful: ", result.user)
-                } else {
+                if (!result.success) {
                     console.error("User sync failed: ", result.error)
                     hasSynced.current = false
                 }

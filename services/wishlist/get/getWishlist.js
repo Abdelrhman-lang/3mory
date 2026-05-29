@@ -1,3 +1,4 @@
+"use server"
 import { db } from "@/config/db/db"
 import { wishlistItemsTable, wishlistTable } from "@/config/db/schema"
 import { eq } from "drizzle-orm"

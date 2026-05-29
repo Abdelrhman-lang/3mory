@@ -10,8 +10,7 @@ export default async function page() {
     const userEmail = clerkUser?.primaryEmailAddress?.emailAddress;
     const user = await getUser(userEmail);
     const userOrders = await getUserOrders(userEmail)
-    const wishlistItems = await getWishlist(userEmail)
     return (
-        <UserAccountClient user={user} userOrders={userOrders} wishlistItems={wishlistItems} />
+        <UserAccountClient user={user} userOrders={userOrders} />
     )
 }

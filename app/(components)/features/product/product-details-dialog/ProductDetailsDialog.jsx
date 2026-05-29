@@ -27,12 +27,17 @@ export function ProductDetailsDialog({ product }) {
     const { user } = useUser()
     const userEmail = user?.primaryEmailAddress?.emailAddress;
 
-    const handelAddToCart = () => {
-        if (!userEmail) {
-            return Swal.fire("Please login first");
+    const handelAddToCart = async () => {
+        try {
+            if (!userEmail) {
+            Swal.fire({
+                icon: "warning",
+                title: "Login Required",
+                text: "Please log in to add products to your cart."
+            })
+            return;
         }
-
-        dispatch(addToCart({
+           await dispatch(addToCart({
             userEmail,
             product,
             name: product.name,
@@ -41,10 +46,32 @@ export function ProductDetailsDialog({ product }) {
             colorImage: selectedImage.colorImage,
             colorValue: selectedImage.colorName,
             size: selectedSize.sizeValue
-        }))
+        })).unwrap()
         setSelectedSize(null)
         setSelectedImage(null)
         setQuantity(1)
+        Swal.fire({
+            icon: "success",
+            title: "Added to Cart",
+            position: "top-end",
+            timer: 1500,
+            toast: true,
+            showConfirmButton: false
+        })
+        } catch (error) {
+            console.error("ADD_TO_CART_ERROR:", error)
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: error || "Failed to Add Product", 
+            position: "top-end",
+            timer: 2000,
+            toast: true,
+            showConfirmButton: false
+        })
+        }
+
+    
     }
     useEffect(() => {
         if (selectedSize) {

@@ -1,7 +1,9 @@
-
+"use client"
+import { deleteFromWishlist } from "@/services/wishlist/delete/deleteFromWishlist";
 import Image from "next/image";
 import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 
 const tableHeads = [
@@ -10,18 +12,45 @@ const tableHeads = [
     { id: 3, title: "product" },
     { id: 4, title: "price" },
     { id: 5, title: "stock status" },
-
     { id: 7, title: "view" },
 ]
 const tdStyle = "p-2.5 border-r"
 const centerItems = "flex items-center justify-center"
 const textStyle = "text-accent text-sm font-semibold"
-export default function Wishlist({ wishlistItems }) {
-
+export default function Wishlist({ wishlistItems, setWishlistItems }) {
+    const handelDeleteFromWishlist = async (id)=> {
+        try {
+            const result = await deleteFromWishlist(id)
+            if(result?.success) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Item deleted from wishlist!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    toast: true,
+                })
+                setWishlistItems((prev)=> prev.filter((item)=> item.id !== id))
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Failed",
+                    text: result?.error || "Could not delete the item.",
+                })
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: error.message || "An unexpected error occurred.",
+            })
+        }
+    }
     return (
         <div className="w-full">
             <div className="overflow-x-scroll xl:overflow-x-hidden">
-                <table className="w-full min-w-[800px]">
+                {wishlistItems && wishlistItems.length > 0 ? (
+                    <table className="w-full min-w-[800px]">
                     <thead className="border bg-[#f2f2f2]">
                         {tableHeads.map((tb) => {
                             return (
@@ -38,7 +67,7 @@ export default function Wishlist({ wishlistItems }) {
                                 <td className={tdStyle}>
                                     <div className={centerItems}>
                                         <button>
-                                            <FaTrash size={20} className="text-red-500 cursor-pointer" onClick={() => cons} />
+                                            <FaTrash size={20} className="text-red-500 cursor-pointer" onClick={() => handelDeleteFromWishlist(item.id)} />
                                         </button>
                                     </div>
                                 </td>
@@ -82,7 +111,13 @@ export default function Wishlist({ wishlistItems }) {
                             </tr>
                         })}
                     </tbody>
-                </table>
+                    </table>
+                ) : (
+                    <div className="flex flex-col items-center gap-3 py-10">
+                        <p className="text-gray-500 text-lg">Your wishlist is currently empty.</p>
+                        <Link href="/shop" className="px-4 py-2 bg-secondary text-white rounded hover:bg-secondary/90 transition">Continue Shopping</Link>
+                    </div>
+                )}
             </div>
         </div>
     )

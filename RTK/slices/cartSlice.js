@@ -1,65 +1,51 @@
 "use client"
+import { createCart } from "@/services/cart/create/createCart"
+import { deleteFromCart } from "@/services/cart/delete/deleteFromCart"
+import { getCart } from "@/services/cart/get/getCart"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import Swal from "sweetalert2"
 
 
-export const addToCart = createAsyncThunk(
-    "cart/addToCart",
-    async ({ product, quantity, userEmail, colorImage, colorValue, size }, thunkApi) => {
-        try {
-            const res = await axios.post("/api/cart/create-cart", {
-                userEmail,
-                productId: product.id,
-                name: product.name,
-                price: product.newPrice,
-                image: product.image,
-                quantity: quantity || 1,
-                colorImage: colorImage,
-                colorValue: colorValue,
-                size: size
-            })
-            if (res.status === 200) {
-                thunkApi.dispatch(getCartItems({ userEmail }))
-                return res.data
 
-            }
-        } catch (err) {
-            const errorMessage = err.response?.data?.error || "Failed to Add Product";
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: errorMessage,
-                position: "top-end",
-                timer: 1500,
-                toast: true,
-                showConfirmButton: false
-            });
-            return thunkApi.rejectWithValue(errorMessage);
+
+export const addToCart = createAsyncThunk("cart/addToCart",async ({ product, quantity, userEmail, colorImage, colorValue, size }, thunkApi) => {
+    try {
+        const res = await createCart(userEmail,product.id, product.name, product.newPrice, product.image, quantity, colorValue, size, colorImage)
+        if(!res?.success) {
+            return thunkApi.rejectWithValue(res?.error || "Failed to Add Product")
         }
+        thunkApi.dispatch(getCartItems({ userEmail }))
+        return res.item
+    } catch (error) {
+        console.error("ADD_TO_CART_ERROR:", error)
+        return thunkApi.rejectWithValue(error.message || "Failed to Add Product")
     }
-)
+})
 export const getCartItems = createAsyncThunk("cart/getCartItems", async ({ userEmail }, thunkApi) => {
     try {
-        const res = await axios.get(`/api/cart/get-cart-items?userEmail=${userEmail}`)
-        if (res.status === 200) {
-            return res.data
+        const res = await getCart(userEmail)
+        if (!res?.success) {
+            return thunkApi.rejectWithValue(res?.error || "Failed to Get Cart Items")
+        }
+        return {
+            items: res.items,
+            cartId: res.cartId
         }
     } catch (err) {
-        thunkApi.rejectWithValue(err.response?.data || "Faild to Get Cart Items")
+        thunkApi.rejectWithValue(err?.error || "Failed to Get Cart Items")
     }
 })
 export const deleteItemFromCart = createAsyncThunk("cart/deleteItemFromCart", async ({ itemId, userEmail }, thunkApi) => {
     try {
-        const res = await axios.delete(`/api/cart/delete-from-cart?itemId=${itemId}`)
-        if (res.status === 200) {
-            thunkApi.dispatch(getCartItems({ userEmail }))
-            return itemId;
+        const res = await deleteFromCart(itemId)
+        if (!res?.success) {
+            return thunkApi.rejectWithValue(res?.error || "Failed to Delete Item from Cart")
         }
+        thunkApi.dispatch(getCartItems({ userEmail }))
+        return itemId
     } catch (err) {
-        return thunkApi.rejectWithValue(
-            err.response?.data || "Faild to delete item from cart"
-        );
+        thunkApi.rejectWithValue(err?.error || "Failed to Delete Item from Cart")
     }
 })
 
@@ -97,15 +83,6 @@ export const cartSlice = createSlice({
             .addCase(addToCart.fulfilled, (state, action) => {
                 state.loading = false;
                 state.items.push(action.payload);
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Added to Cart successfully",
-                    showConfirmButton: false,
-                    timer: 1500,
-                    toast: true
-                });
-
             })
             .addCase(addToCart.rejected, (state, action) => {
                 state.loading = false;

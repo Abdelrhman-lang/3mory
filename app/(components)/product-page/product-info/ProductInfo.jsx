@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useUser } from "@clerk/nextjs";
 import Swal from "sweetalert2";
 import { addToCart } from "@/RTK/slices/cartSlice";
+import { createWishlist } from "@/services/wishlist/create/createWishlist";
 export default function ProductInfo({ uniqueProduct, product, setSelectedColor, setSelectedMainImage, selectedColor, selectedSize, setSelectedSize, selectedSizeId, setSelectedSizeId, quantity, setQuantity, mainImage }) {
     const sizeColors = product.colors.filter(c => c.sizeId === selectedSizeId)
 
@@ -34,6 +35,37 @@ export default function ProductInfo({ uniqueProduct, product, setSelectedColor, 
         setQuantity(1)
         setSelectedSize(null)
         setSelectedColor(null)
+    }
+    const handelAddToWishlist = async ()=> {
+        try {
+            if(!userEmail) {
+                return Swal.fire("Please Login First")
+            }
+            const result = await createWishlist(userEmail, uniqueProduct.id, mainImage, uniqueProduct.name, uniqueProduct.newPrice, uniqueProduct.quantity)
+            if(result) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Added to Wishlist",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    toast: true,
+                    position: "top-right",
+                })
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: result.message,
+                    showConfirmButton: false,
+                })
+            }
+        } catch (error) {
+            console.error("Error adding to wishlist:", error);
+            Swal.fire({
+                icon: "error",
+                title: "An error occurred while adding to wishlist",
+                showConfirmButton: false,
+            })
+        }
     }
     return (
         <div className="space-y-4">
@@ -63,7 +95,7 @@ export default function ProductInfo({ uniqueProduct, product, setSelectedColor, 
             <div className="mt-5">
                 <div className="text-sm text-accent flex items-center gap-1 cursor-pointer transition-colors duration-200 hover:text-secondary">
                     <span><CiHeart size={20} /></span>
-                    <span>Add To Wish List</span>
+                    <button className="cursor-pointer" onClick={handelAddToWishlist}>Add To Wish List</button>
                 </div>
             </div>
 

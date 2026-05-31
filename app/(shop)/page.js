@@ -1,9 +1,10 @@
 import { getProducts } from "@/services/products/getProducts";
-import BannarSection from "./(components)/home/bannar-sec/BannarSection";
-import BlogSection from "./(components)/home/blog-sec/BlogSection";
-import CollectionSection from "./(components)/home/collection-sec/CollectionSection";
-import FollowusSection from "./(components)/home/followus-sec/FollowusSection";
-import Hero from "./(components)/home/hero/Hero";
+import Hero from "../(components)/home/hero/Hero";
+import CollectionSection from "../(components)/home/collection-sec/CollectionSection";
+import BannarSection from "../(components)/home/bannar-sec/BannarSection";
+import BlogSection from "../(components)/home/blog-sec/BlogSection";
+import FollowusSection from "../(components)/home/followus-sec/FollowusSection";
+
 
 export default async function Home() {
   const products = await getProducts()

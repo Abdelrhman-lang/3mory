@@ -1,4 +1,5 @@
 "use client";
+import DashboardTitle from "@/app/(components)/shared/dashboard-title/DashboardTitle";
 import { Spinner } from "@/components/ui/spinner";
 import {
   getOrders,
@@ -78,14 +79,10 @@ export default function page() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">
-            Orders Management
-          </h1>
-          <p className="text-sm text-gray-500">
-            Track and manage your store's customer orders.
-          </p>
-        </div>
+        <DashboardTitle
+          title={"orders management"}
+          description={"Track and manage your store's orders."}
+        />
         <button
           onClick={fetchOrders}
           className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50"

@@ -1,4 +1,5 @@
 "use client";
+import DashboardTitle from "@/app/(components)/shared/dashboard-title/DashboardTitle";
 import { Spinner } from "@/components/ui/spinner";
 import { getUsers } from "@/services/dashboard-actions/users/users";
 import React, { useEffect, useState } from "react";
@@ -25,12 +26,10 @@ export default function page() {
   }, []);
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-800">Users Management</h1>
-        <p className="text-sm text-gray-500">
-          Track and manage your store's users.
-        </p>
-      </div>
+      <DashboardTitle
+        title={"users management"}
+        description={"Track and manage your store's users."}
+      />
 
       {loading ? (
         <div className="flex items-center justify-center h-64">
@@ -48,6 +47,7 @@ export default function page() {
                   <th className="p-4">Last Name</th>
                   <th className="p-4">Address</th>
                   <th className="p-4">Phone Number</th>
+                  <th className="p-4">Role</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
@@ -64,6 +64,7 @@ export default function page() {
                     <td className="p-4 text-gray-600">{user.lastName}</td>
                     <td className="p-4 text-gray-600">{user.address}</td>
                     <td className="p-4 text-gray-600">{user.phoneNumber}</td>
+                    <td className="p-4 text-gray-600">{user.role}</td>
                   </tr>
                 ))}
               </tbody>

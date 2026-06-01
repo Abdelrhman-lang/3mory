@@ -1,15 +1,11 @@
 "use client";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import { FaRegTrashAlt } from "react-icons/fa";
 import Image from "next/image";
 import { deleteItemFromCart, getCartItems } from "@/RTK/slices/cartSlice";
 import { useUser } from "@clerk/nextjs";
-
 import { Spinner } from "@/components/ui/spinner";
 import { useEffect } from "react";
-import SecondartBtn from "@/app/(components)/ui/secondary-btn/SecondartBtn";
 import BreadcrumbBasic from "@/app/(components)/shared/breadcrumb/BreadcrumbBasic";
 const tableHeads = [
   { id: 1, title: "delete" },
@@ -188,11 +184,6 @@ export default function CartClient() {
                             ${totalPrice + shipping}
                           </p>
                         </div>
-
-                        {/* <div className="pt-3.5 flex items-center justify-end">
-                                                    <SecondartBtn title={"place order"} className={"px-5 py-3 rounded-[3px]"} onClick={() => dispatch(createOrder({ userEmail, items, totalPrice: (totalPrice + shipping) }))} />
-                                                    <SecondartBtn title={"click"} className={"px-5 py-3 rounded-[3px]"} onClick={() => console.log(items)} />
-                                                </div> */}
                       </div>
                     </div>
                   </div>

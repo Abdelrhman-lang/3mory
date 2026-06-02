@@ -45,7 +45,6 @@ export const colorsTable = pgTable("colors", {
   colorName: text("color_name").notNull(),
   colorImage: text("color_image"),
   colorQuantity: integer("color_quantity"),
-
   sizeId: integer("size_id")
     .references(() => sizesTable.id, { onDelete: "cascade" })
     .notNull(),

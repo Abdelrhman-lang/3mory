@@ -1,12 +1,19 @@
 "use client";
+import { UpdateDialog } from "@/app/(components)/features/product/update-product-dialog/UpdateDialog";
 import DashboardTitle from "@/app/(components)/shared/dashboard-title/DashboardTitle";
-import { DialogDemo } from "@/app/(components)/ui/dialog/DialogDemo";
+import {
+  DetailsDemo,
+  DialogDemo,
+} from "@/app/(components)/ui/dialog/DetailsDemo";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { deleteProduct } from "@/services/products/delete/deleteProduct";
 import { getProducts } from "@/services/products/getProducts";
 import { Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export default function page() {
   const [products, setProducts] = useState([]);
@@ -29,30 +36,54 @@ export default function page() {
     fetchProducts();
   }, []);
 
-  const stockStatus = (quantity) => {
-    if (quantity === 0) return "Out of Stock";
-    if (quantity <= 5) return "low Stock";
-    return "In Stock";
-  };
-  const stockColor = (stock) => {
-    switch (stock) {
-      case "In Stock":
-        return "text-green-500";
-      case "low Stock":
-        return "text-yellow-500";
-      case "Out of Stock":
-        return "text-red-500";
-      default:
-        return "text-gray-500";
-    }
+  const handelDelete = async (productId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "you will delete this product with all colors and sizes",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await deleteProduct(productId);
+          if (res?.success) {
+            Swal.fire({
+              icon: "success",
+              title: res?.message,
+              timer: 1500,
+              showConfirmButton: false,
+              toast: true,
+              position: "top-end",
+            });
+            setProducts((prev) => prev.filter((p) => p.id !== productId));
+          }
+        } catch (error) {
+          console.error("Error deleting product:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Failed to delete product",
+            timer: 1500,
+            showConfirmButton: false,
+            toast: true,
+            position: "top-end",
+          });
+        }
+      }
+    });
   };
 
   return (
     <div className="space-y-6">
-      <DashboardTitle
-        title={"products mangment"}
-        description={"manage your products here"}
-      />
+      <div className="flex items-center justify-between">
+        <DashboardTitle
+          title={"products mangment"}
+          description={"manage your products here"}
+        />
+        <Button variant="outline">Add Product</Button>
+      </div>
       {loading ? (
         <div className="flex items-center justify-center h-64">
           <Spinner className={"size-14"} />
@@ -112,21 +143,21 @@ export default function page() {
 
                     {/* التفاصيل */}
                     <td className="p-4 text-gray-500">
-                      <DialogDemo product={product} />
+                      <DetailsDemo
+                        product={product}
+                        setProducts={setProducts}
+                      />
                     </td>
 
                     {/* أزرار التحكم */}
                     <td className="p-4 flex items-center justify-center">
                       <div className="flex items-center gap-2">
-                        <Link
-                          href={`/admin/products/edit/${product.id}`}
-                          className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
-                          title="Edit Product"
-                        >
-                          <Pencil size={16} />
-                        </Link>
+                        <UpdateDialog
+                          product={product}
+                          setProducts={setProducts}
+                        />
                         <button
-                          onClick={() => handleDelete(product.id)}
+                          onClick={() => handelDelete(product.id)}
                           className="p-2 text-gray-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
                           title="Delete Product"
                         >
@@ -145,8 +176,6 @@ export default function page() {
           No orders found yet.
         </div>
       )}
-      <button onClick={() => console.log(availableColors)}>get colors</button>
-      <button onClick={() => console.log(products)}>get products</button>
     </div>
   );
 }

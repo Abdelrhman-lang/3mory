@@ -36,11 +36,7 @@ const items = [
     url: "/admin/products",
     icon: Package,
   },
-  {
-    title: "Add Product",
-    url: "/admin/add-product",
-    icon: Plus,
-  },
+
   {
     title: "Orders",
     url: "/admin/orders",

@@ -13,14 +13,45 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 
-export function DialogDemo({ product }) {
+import { AddSizeDialog } from "../../features/product/product-size-dialog/AddSizeDialog";
+import { ColorsForProductDialog } from "../../features/product/product-color-dialog/ColorsForProductDialog";
+import { Trash2 } from "lucide-react";
+import Swal from "sweetalert2";
+import { showToast } from "@/lib/toast";
+import { deleteSize } from "@/services/sizes/delete-size/deleteSize";
+
+export function DetailsDemo({ product, setProducts }) {
+  const handelDeleteSize = async (sizeId) => {
+    try {
+      const res = await deleteSize(sizeId);
+      if (res?.success) {
+        showToast("success", res?.message);
+        if (setProducts) {
+          setProducts((prevProducts) =>
+            prevProducts.map((p) => {
+              if (p.id !== product.id) return p;
+
+              return {
+                ...p,
+                sizes: p?.sizes?.filter((s) => s.id !== Number(sizeId)),
+              };
+            }),
+          );
+        }
+      } else {
+        showToast("error", res?.message);
+      }
+    } catch (error) {
+      showToast("error", error?.message);
+    }
+  };
+
   return (
     <Dialog>
       <form>
@@ -36,11 +67,11 @@ export function DialogDemo({ product }) {
             </DialogDescription>
           </DialogHeader>
           <Table>
-            <TableCaption>A list of product sizes and colors.</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>Sizes</TableHead>
                 <TableHead>Available Colors</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -56,22 +87,13 @@ export function DialogDemo({ product }) {
                               key={color.id}
                               className="flex items-center gap-1.5 bg-slate-100 border border-slate-200 px-2 py-1 rounded-md shadow-sm"
                             >
-                              {/* لو عندك رابط صورة اللون، اعرضها مصغرة بشياكة */}
-                              {color.colorImage ? (
-                                <img
-                                  src={color.colorImage}
-                                  alt={color.colorName}
-                                  className="w-5 h-5 rounded object-cover border border-slate-300"
-                                />
-                              ) : (
-                                <div className="w-4 h-4 rounded bg-gray-300 flex items-center justify-center">
-                                  <ImageIcon
-                                    size={10}
-                                    className="text-gray-500"
-                                  />
-                                </div>
-                              )}
-                              <span className="text-xs font-medium text-slate-800">
+                              <img
+                                src={color.colorImage}
+                                alt={color.colorName}
+                                className="w-5 h-5 rounded object-cover border border-slate-300"
+                              />
+
+                              <span className="text-xs font-medium text-slate-800 capitalize">
                                 {color.colorName}
                               </span>
                               <span className="text-xs text-muted-foreground">
@@ -86,11 +108,32 @@ export function DialogDemo({ product }) {
                         )}
                       </div>
                     </TableCell>
+                    <TableCell className={"flex items-center gap-2"}>
+                      <ColorsForProductDialog
+                        product={product}
+                        sizeValue={size.sizeValue}
+                        size={size}
+                        setProducts={setProducts}
+                      />
+                      <Button
+                        variant="outline"
+                        className={
+                          "hover:text-red-400 bg-gray-100 text-gray-600"
+                        }
+                        onClick={() => handelDeleteSize(size.id)}
+                      >
+                        <Trash2 size={16} />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
             </TableBody>
           </Table>
+
+          <div className="flex items-center justify-end">
+            <AddSizeDialog product={product} setProducts={setProducts} />
+          </div>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>

@@ -3,7 +3,6 @@ import {
   integer,
   numeric,
   pgTable,
-  serial,
   text,
   timestamp,
   varchar,

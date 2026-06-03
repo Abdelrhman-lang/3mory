@@ -2,8 +2,11 @@ import { AppSidebar } from "@/app/(components)/ui/app-sidebar/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip"; // 🔥 1. استورد الـ TooltipProvider
 import { UserButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 
-export default function Layout({ children }) {
+export default async function Layout({ children }) {
+  const clerkUser = await currentUser();
+  const adminName = clerkUser?.firstName;
   return (
     <SidebarProvider>
       <TooltipProvider delayDuration={0}>
@@ -16,7 +19,7 @@ export default function Layout({ children }) {
               <div className="flex items-center gap-4">
                 <SidebarTrigger />
                 <h2 className="text-md font-semibold text-gray-700">
-                  Welcome Back, Admin 👋
+                  Welcome Back, {adminName} 👋
                 </h2>
               </div>
               <div className="flex items-center gap-4">

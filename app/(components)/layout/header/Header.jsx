@@ -1,20 +1,8 @@
-"use client"
-import HeaderTop from './header-top/HeaderTop'
-import HeaderBottom from './header-bottom/HeaderBottom'
-import HeaderMenu from './header-menu/HeaderMenu'
-import { usePathname } from 'next/navigation'
+import React from "react";
+import HeaderClient from "./HeaderClient";
+import { currentUser } from "@clerk/nextjs/server";
+import { getUser } from "@/services/user/getUser";
 
-
-export default function Header() {
-    const pathname = usePathname()
-    return (
-        <header className={`relative ${pathname.includes("sign-in") || pathname.includes("sign-up") ? "hidden" : "block"}`}>
-            <div className='custom-container'>
-                <HeaderTop />
-                <HeaderBottom />
-                <HeaderMenu />
-            </div>
-
-        </header>
-    )
+export default async function Header() {
+  return <HeaderClient />;
 }

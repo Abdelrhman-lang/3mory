@@ -66,70 +66,76 @@ export function DetailsDemo({ product, setProducts }) {
               colors
             </DialogDescription>
           </DialogHeader>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Sizes</TableHead>
-                <TableHead>Available Colors</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {product.sizes?.map((size) => {
-                return (
-                  <TableRow key={size.id}>
-                    <TableCell>{size.sizeValue}</TableCell>
-                    <TableCell>
-                      <div className="flex flex-wrap gap-3">
-                        {size.colors && size.colors.length > 0 ? (
-                          size.colors.map((color) => (
-                            <div
-                              key={color.id}
-                              className="flex items-center gap-1.5 bg-slate-100 border border-slate-200 px-2 py-1 rounded-md shadow-sm"
-                            >
-                              <img
-                                src={color.colorImage}
-                                alt={color.colorName}
-                                className="w-5 h-5 rounded object-cover border border-slate-300"
-                              />
+          {product?.sizes?.length > 0 ? (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Sizes</TableHead>
+                  <TableHead>Available Colors</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {product.sizes?.map((size) => {
+                  return (
+                    <TableRow key={size.id}>
+                      <TableCell>{size.sizeValue}</TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap gap-3">
+                          {size.colors && size.colors.length > 0 ? (
+                            size.colors.map((color) => (
+                              <div
+                                key={color.id}
+                                className="flex items-center gap-1.5 bg-slate-100 border border-slate-200 px-2 py-1 rounded-md shadow-sm"
+                              >
+                                <img
+                                  src={color.colorImage}
+                                  alt={color.colorName}
+                                  className="w-5 h-5 rounded object-cover border border-slate-300"
+                                />
 
-                              <span className="text-xs font-medium text-slate-800 capitalize">
-                                {color.colorName}
-                              </span>
-                              <span className="text-xs text-muted-foreground">
-                                ({color?.colorQuantity} in stock)
-                              </span>
-                            </div>
-                          ))
-                        ) : (
-                          <span className="text-xs text-muted-foreground italic">
-                            No colors available
-                          </span>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell className={"flex items-center gap-2"}>
-                      <ColorsForProductDialog
-                        product={product}
-                        sizeValue={size.sizeValue}
-                        size={size}
-                        setProducts={setProducts}
-                      />
-                      <Button
-                        variant="outline"
-                        className={
-                          "hover:text-red-400 bg-gray-100 text-gray-600"
-                        }
-                        onClick={() => handelDeleteSize(size.id)}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                                <span className="text-xs font-medium text-slate-800 capitalize">
+                                  {color.colorName}
+                                </span>
+                                <span className="text-xs text-muted-foreground">
+                                  ({color?.colorQuantity} in stock)
+                                </span>
+                              </div>
+                            ))
+                          ) : (
+                            <span className="text-xs text-muted-foreground italic">
+                              No colors available
+                            </span>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className={"flex items-center gap-2"}>
+                        <ColorsForProductDialog
+                          product={product}
+                          sizeValue={size.sizeValue}
+                          size={size}
+                          setProducts={setProducts}
+                        />
+                        <Button
+                          variant="outline"
+                          className={
+                            "hover:text-red-400 bg-gray-100 text-gray-600"
+                          }
+                          onClick={() => handelDeleteSize(size.id)}
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="flex items-center justify-center text-muted-foreground text-lg capitalize">
+              there are no sizes for this product
+            </div>
+          )}
 
           <div className="flex items-center justify-end">
             <AddSizeDialog product={product} setProducts={setProducts} />

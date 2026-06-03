@@ -1,6 +1,7 @@
 "use client";
 import {
   Check,
+  Earth,
   Globe,
   Home,
   ListOrdered,
@@ -27,25 +28,35 @@ import { UserButton } from "@clerk/nextjs";
 // Menu items.
 const items = [
   {
+    id: 1,
     title: "Dashboard",
     url: "/admin",
     icon: Home,
   },
   {
+    id: 2,
     title: "Inventory",
     url: "/admin/products",
     icon: Package,
   },
 
   {
+    id: 3,
     title: "Orders",
     url: "/admin/orders",
     icon: ListOrdered,
   },
   {
+    id: 4,
     title: "Users",
     url: "/admin/users",
     icon: User,
+  },
+  {
+    id: 5,
+    title: "Go To Website",
+    url: "/",
+    icon: Earth,
   },
 ];
 

@@ -1,17 +1,14 @@
 "use client";
+import { AddProductDialog } from "@/app/(components)/features/product/add-product-dialog/AddProductDialog";
 import { UpdateDialog } from "@/app/(components)/features/product/update-product-dialog/UpdateDialog";
 import DashboardTitle from "@/app/(components)/shared/dashboard-title/DashboardTitle";
-import {
-  DetailsDemo,
-  DialogDemo,
-} from "@/app/(components)/ui/dialog/DetailsDemo";
-import { Button } from "@/components/ui/button";
+import { DetailsDemo } from "@/app/(components)/ui/dialog/DetailsDemo";
+
 import { Spinner } from "@/components/ui/spinner";
 import { deleteProduct } from "@/services/products/delete/deleteProduct";
 import { getProducts } from "@/services/products/getProducts";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -82,7 +79,7 @@ export default function page() {
           title={"products mangment"}
           description={"manage your products here"}
         />
-        <Button variant="outline">Add Product</Button>
+        <AddProductDialog setProduct={setProducts} />
       </div>
       {loading ? (
         <div className="flex items-center justify-center h-64">
@@ -134,7 +131,9 @@ export default function page() {
                     </td>
 
                     {/* القسم */}
-                    <td className="p-4 text-gray-500">{product.category}</td>
+                    <td className="p-4 text-gray-500 capitalize">
+                      {product.category}
+                    </td>
 
                     {/* السعر */}
                     <td className="p-4 font-bold text-emerald-600">

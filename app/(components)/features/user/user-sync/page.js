@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import { postUser } from "@/services/user/postUsre"
-import { useUser } from "@clerk/nextjs"
-import { useEffect, useRef } from "react"
+import { postUser } from "@/services/user/postUsre";
+import { useUser } from "@clerk/nextjs";
+import { useEffect, useRef } from "react";
 
 export default function UserSync() {
-    const {isSignedIn, isLoaded} = useUser()
+  const { isSignedIn, isLoaded } = useUser();
 
-    const hasSynced = useRef(false)
+  const hasSynced = useRef(false);
 
-    useEffect(()=> {
-        async function syncUser() {
-            try {
-                hasSynced.current = true
-                const result = await postUser()
-                if (!result.success) {
-                    console.error("User sync failed: ", result.error)
-                    hasSynced.current = false
-                }
-            } catch (error) {
-                console.error("Error syncing user: ", error)
-                hasSynced.current = false
-            }
+  useEffect(() => {
+    async function syncUser() {
+      try {
+        hasSynced.current = true;
+        const result = await postUser();
+        if (!result.success) {
+          console.error("User sync failed: ", result.error);
+          hasSynced.current = false;
         }
+      } catch (error) {
+        console.error("Error syncing user: ", error);
+        hasSynced.current = false;
+      }
+    }
 
-        if(isLoaded && isSignedIn && !hasSynced.current) {
-            syncUser()
-        }
-    }, [isSignedIn, isLoaded])
-  return null
+    if (isLoaded && isSignedIn && !hasSynced.current) {
+      syncUser();
+    }
+  }, [isSignedIn, isLoaded]);
+  return null;
 }

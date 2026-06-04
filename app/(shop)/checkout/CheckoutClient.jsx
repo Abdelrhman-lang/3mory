@@ -9,6 +9,7 @@ import { placeOrder } from "@/services/orders/create/placeOrder";
 import BreadcrumbBasic from "@/app/(components)/shared/breadcrumb/BreadcrumbBasic";
 import CheckoutDetails from "@/app/(components)/ui/checkout/details/CheckoutDetails";
 import CheckoutOrder from "@/app/(components)/ui/checkout/order-details/CheckoutOrder";
+import { showToast } from "@/lib/toast";
 
 export default function CheckoutClient({ user }) {
   const dispatch = useDispatch();
@@ -38,6 +39,11 @@ export default function CheckoutClient({ user }) {
   const handelPlaceOrder = async (e) => {
     e.preventDefault();
 
+    if (!formData.phoneNumber || !formData?.address)
+      return showToast(
+        "error",
+        "Please Add Phone Number and Address To Place Order",
+      );
     setLoading(true);
     try {
       // Update user details

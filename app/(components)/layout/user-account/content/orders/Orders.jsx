@@ -22,11 +22,24 @@ export default function Orders({ userOrders }) {
       />
     );
   }
+
+  const statusColor = (status) => {
+    switch (status) {
+      case "pending":
+        return "text-yellow-500";
+      case "delivered":
+        return "text-green-500";
+      case "cancelled":
+        return "text-red-500";
+      default:
+        return "text-accent";
+    }
+  };
   return (
     <div className="w-full">
       <div className="overflow-x-scroll xl:overflow-x-hidden">
         {userOrders?.length > 0 ? (
-          <table className="w-full min-w-[800px]">
+          <table className="w-full min-w-200">
             <thead className="border bg-[#f2f2f2]">
               {tableHeads.map((tb) => {
                 return (
@@ -46,21 +59,13 @@ export default function Orders({ userOrders }) {
                     {/* ID */}
                     <td className={tdStyle}>
                       <div className={centerItems}>
-                        <p
-                          className={textStyle}
-                          onClick={() => console.log(user)}
-                        >
-                          {order?.id}
-                        </p>
+                        <p className={textStyle}>{order?.id}</p>
                       </div>
                     </td>
                     {/* Date */}
                     <td className={tdStyle}>
                       <div className={centerItems}>
-                        <p
-                          className={textStyle}
-                          onClick={() => console.log(user)}
-                        >
+                        <p className={textStyle}>
                           {order?.createdAt
                             ? new Date(order.createdAt).toLocaleString()
                             : ""}
@@ -71,8 +76,7 @@ export default function Orders({ userOrders }) {
                     <td className={tdStyle}>
                       <div className={centerItems}>
                         <p
-                          className={textStyle}
-                          onClick={() => console.log(user)}
+                          className={`text-sm font-semibold ${statusColor(order?.status)} capitalize`}
                         >
                           {order?.status}
                         </p>
@@ -81,12 +85,7 @@ export default function Orders({ userOrders }) {
                     {/* Total */}
                     <td className={tdStyle}>
                       <div className={centerItems}>
-                        <p
-                          className={textStyle}
-                          onClick={() => console.log(user)}
-                        >
-                          {order?.totalPrice}
-                        </p>
+                        <p className={textStyle}>{order?.totalPrice}</p>
                       </div>
                     </td>
                     {/* Actions */}

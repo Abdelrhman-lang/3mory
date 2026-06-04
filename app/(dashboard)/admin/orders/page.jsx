@@ -8,6 +8,7 @@ import {
 import { RefreshCw } from "lucide-react";
 import React, { useEffect, useState, useTransition } from "react";
 import Swal from "sweetalert2";
+import { OrderDetailsDialog } from "./order-details-dialog/OrderDetailsDialog";
 
 export default function page() {
   const [orders, setOrders] = useState([]);
@@ -105,9 +106,11 @@ export default function page() {
                   <th className="p-4">Order ID</th>
                   <th className="p-4">Customer Email</th>
                   <th className="p-4">Total Price</th>
+                  <th className="p-4">Note</th>
                   <th className="p-4">Status</th>
                   <th className="p-4">Date</th>
                   <th className="p-4 text-center">Actions</th>
+                  <th className="p-4 text-center">Details</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
@@ -122,6 +125,9 @@ export default function page() {
                     <td className="p-4 text-gray-600">{order.userEmail}</td>
                     <td className="p-4 font-medium text-red-500">
                       ${order.totalPrice}
+                    </td>
+                    <td className="p-4 font-semibold text-slate-900">
+                      {order.note}
                     </td>
                     <td className="p-4">
                       <span
@@ -156,6 +162,9 @@ export default function page() {
                         <option value="delivered">Delivered</option>
                         <option value="cancelled">Cancelled</option>
                       </select>
+                    </td>
+                    <td className="p-4">
+                      <OrderDetailsDialog order={order} />
                     </td>
                   </tr>
                 ))}

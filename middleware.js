@@ -23,7 +23,6 @@ export default clerkMiddleware(async (auth, req) => {
 
   let role = "user"; // القيمة الافتراضية
 
-  // 🔥 لو فيه مستخدم مسجل، هنجيب بياناته الحية فوراً من السيرفر بدون كاش Token
   if (userId) {
     try {
       const client = await clerkClient();
@@ -33,9 +32,6 @@ export default clerkMiddleware(async (auth, req) => {
       console.error("Error fetching user role in middleware:", err);
     }
   }
-
-  // طباعة الـ Role للتأكيد بنسبة 100%
-  console.log("🔴 Live User Role in Terminal:", role);
 
   // حماية مسار الأدمن
   if (isAdminRoute(req) && role !== "admin") {

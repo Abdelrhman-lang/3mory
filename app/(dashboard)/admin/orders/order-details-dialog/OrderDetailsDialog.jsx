@@ -13,10 +13,9 @@ import { getUserOrderItems } from "@/services/orders/getUserOrderItems";
 import { useEffect, useState } from "react";
 import { OrderItemCard } from "./OrderItemCard";
 import { getUser } from "@/services/user/getUser";
-import UserDetailsTable from "./UserDetailsTable";
+
 export function OrderDetailsDialog({ order }) {
   const [orderItems, setOrderItems] = useState([]);
-  const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const fetchOrderItems = async () => {
@@ -34,37 +33,18 @@ export function OrderDetailsDialog({ order }) {
       setLoading(false);
     }
   };
-  const fetchUserDetails = async () => {
-    if (!order?.userEmail) return;
-    setLoading(true);
-    try {
-      const res = await getUser(order?.userEmail);
-      if (res) {
-        setUserDetails(res);
-      }
-    } catch (error) {
-      console.error("Error Fetching UserDetails", error);
-    } finally {
-      setLoading(false);
-    }
-  };
   useEffect(() => {
     if (open) {
       fetchOrderItems();
     }
   }, [order?.id, open]);
-
-  useEffect(() => {
-    if (open) {
-      fetchUserDetails();
-    }
-  }, [open, order?.userEmail]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">View Details</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-200">
+
+      <DialogContent className="lg:max-w-200 h-3/4 overflow-y-scroll md:h-auto md:overflow-hidden">
         <DialogHeader>
           <DialogTitle className={"text-center"}>
             Order <span className="font-bold">#{order.id}</span> Details
@@ -85,11 +65,11 @@ export function OrderDetailsDialog({ order }) {
               })}
             </div>
 
-            <div className="space-y-4">
-              <h2 className="text-3xl font-semibold text-Primary">
-                User Details
-              </h2>
-              <UserDetailsTable userDetails={userDetails} />
+            <div className="space-y-3">
+              <h3 className="font-bold text-2xl">Order Notes</h3>
+              <p className="inline-flex items-center px-2 py-0.5 rounded-md text-sm font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                {order?.note}
+              </p>
             </div>
           </div>
         )}

@@ -18,12 +18,10 @@ export async function postUser() {
     const email = clerkUser.primaryEmailAddress?.emailAddress;
     const firstName = clerkUser.firstName;
     const lastName = clerkUser.lastName;
+    const role = clerkUser.publicMetadata.role;
     if (!email || !firstName || !lastName) {
       return { success: false, error: "Missing required user information" };
     }
-
-    // 🔥 تحديد الـ Role ذكياً بناءً على الإيميل
-    const assignedRole = ADMIN_EMAILS.includes(email) ? "admin" : "user";
 
     const [existingUser] = await db
       .select()
@@ -41,31 +39,11 @@ export async function postUser() {
           email: email,
           phoneNumber: null,
           address: null,
-          // لو عندك عمود للـ role في جدول الـ usersTable برضه يفضل تخزنها فيه كدة:
-          // role: assignedRole,
-          role: assignedRole,
+          role: role,
         })
         .returning();
 
-      // تصليح استدعاء Clerk الجديد (Clerk بقا بيستدعي الـ client مباشرة)
-      const client = await clerkClient();
-      await client.users.updateUserMetadata(clerkUser.id, {
-        publicMetadata: {
-          role: assignedRole, // 🔥 هياخد admin لو إيميلك، وuser لو أي حد تاني
-        },
-      });
-
       return { success: true, user: newUser, isNew: true };
-    }
-
-    // 2️⃣ حالة: مستخدم قديم في الداتابيز بس الـ Metadata بتاعته في Clerk فاضية
-    if (!clerkUser.publicMetadata?.role) {
-      const client = await clerkClient();
-      await client.users.updateUserMetadata(clerkUser.id, {
-        publicMetadata: {
-          role: assignedRole, // 🔥 تأمين إن الـ Role تنزل صح حتى لو سجل قبل كدة
-        },
-      });
     }
 
     return { success: true, user: existingUser, isNew: false };

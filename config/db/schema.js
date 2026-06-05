@@ -15,7 +15,7 @@ export const usersTable = pgTable("users", {
   address: varchar({ length: 255 }),
   phoneNumber: integer(),
   email: varchar({ length: 255 }).notNull().unique(),
-  role: text("role").default("user").notNull(),
+  role: text("role"),
 });
 
 export const productsTable = pgTable("products", {

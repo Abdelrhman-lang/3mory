@@ -58,7 +58,7 @@ export function DetailsDemo({ product, setProducts }) {
         <DialogTrigger asChild>
           <Button variant="outline">Details</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-150">
+        <DialogContent className="sm:max-w-150 h-3/4 overflow-y-scroll">
           <DialogHeader>
             <DialogTitle className={"text-center"}>{product.name}</DialogTitle>
             <DialogDescription className={"text-center text-sm text-secondary"}>

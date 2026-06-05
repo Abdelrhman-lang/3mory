@@ -74,7 +74,7 @@ export default function page() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-0 items-center justify-between">
         <DashboardTitle
           title={"products mangment"}
           description={"manage your products here"}

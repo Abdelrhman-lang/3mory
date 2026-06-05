@@ -9,6 +9,7 @@ import { RefreshCw } from "lucide-react";
 import React, { useEffect, useState, useTransition } from "react";
 import Swal from "sweetalert2";
 import { OrderDetailsDialog } from "./order-details-dialog/OrderDetailsDialog";
+import { ShippingDialog } from "@/app/(components)/ui/shipping-dialog/ShippingDialog";
 
 export default function page() {
   const [orders, setOrders] = useState([]);
@@ -79,7 +80,7 @@ export default function page() {
   };
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 md:flex-row md:gap-0 items-center justify-between">
         <DashboardTitle
           title={"orders management"}
           description={"Track and manage your store's orders."}
@@ -106,11 +107,11 @@ export default function page() {
                   <th className="p-4">Order ID</th>
                   <th className="p-4">Customer Email</th>
                   <th className="p-4">Total Price</th>
-                  <th className="p-4">Note</th>
                   <th className="p-4">Status</th>
                   <th className="p-4">Date</th>
                   <th className="p-4 text-center">Actions</th>
-                  <th className="p-4 text-center">Details</th>
+                  <th className="p-4 text-center">Order Details</th>
+                  <th className="p-4 text-center">Shipping Details</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
@@ -126,9 +127,7 @@ export default function page() {
                     <td className="p-4 font-medium text-red-500">
                       ${order.totalPrice}
                     </td>
-                    <td className="p-4 font-semibold text-slate-900">
-                      {order.note}
-                    </td>
+
                     <td className="p-4">
                       <span
                         className={`px-2.5 py-1 rounded-full text-xs font-semibold ${getStatusColor(order.status)}`}
@@ -165,6 +164,9 @@ export default function page() {
                     </td>
                     <td className="p-4">
                       <OrderDetailsDialog order={order} />
+                    </td>
+                    <td className="p-4">
+                      <ShippingDialog order={order} />
                     </td>
                   </tr>
                 ))}

@@ -6,12 +6,12 @@ export function OrderItemCard({ item }) {
   const cleanColor = item?.color?.trim();
 
   return (
-    <div className="p-4 bg-white border border-slate-100 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md">
-      <h4 className="font-semibold text-slate-800 text-sm md:text-base truncate mb-3 text-center">
+    <div className=" p-4 bg-white border border-slate-100 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md">
+      <h4 className="font-semibold text-slate-800 text-sm md:text-base truncate mb-3 text-center md:text-left">
         {item?.productName}
       </h4>
 
-      <div className="flex items-center gap-4 ">
+      <div className="flex  items-center justify-center gap-4 ">
         {/* 1️⃣ سيكشن الصورة */}
         <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-slate-50 border border-slate-100 flex-shrink-0">
           <Image
@@ -34,11 +34,12 @@ export function OrderItemCard({ item }) {
                 {item?.size}
               </span>
             </span>
-
+          </div>
+          <div className="flex  flex-wrap gap-4 mt-1.5">
             <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
               Color:{" "}
               <span className="font-bold ml-1 text-slate-800">
-                {cleanColor}
+                {item?.color}
               </span>
             </span>
           </div>

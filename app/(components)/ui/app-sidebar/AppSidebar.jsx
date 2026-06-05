@@ -8,6 +8,7 @@ import {
   Package,
   Plus,
   User,
+  User2Icon,
   View,
 } from "lucide-react";
 
@@ -54,6 +55,12 @@ const items = [
   },
   {
     id: 5,
+    title: "Admins",
+    url: "/admin/admins",
+    icon: User2Icon,
+  },
+  {
+    id: 6,
     title: "Go To Website",
     url: "/",
     icon: Earth,

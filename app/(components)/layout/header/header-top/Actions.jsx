@@ -1,12 +1,13 @@
 "use client";
 import { FaShoppingBasket } from "react-icons/fa";
 import { UserButton, useUser } from "@clerk/nextjs";
-import Link from "next/link";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getCartItems, toggleCart } from "@/RTK/slices/cartSlice";
 import { User } from "lucide-react";
 import { MdDashboard } from "react-icons/md";
+import Login from "@/app/(components)/shared/login/Login";
 export default function Actions({ className }) {
   const { isSignedIn, user } = useUser();
   const dispatch = useDispatch();
@@ -43,17 +44,7 @@ export default function Actions({ className }) {
             )}
           </UserButton>
         ) : (
-          <div>
-            <ul className="flex items-center gap-3 text-primary text-xs">
-              <li className="transition-colors duration-300 hover:text-secondary">
-                <Link href={"/sign-in"}>Login</Link>
-              </li>
-              <li>/</li>
-              <li className="transition-colors duration-300 hover:text-secondary">
-                <Link href={"/sign-up"}>Register</Link>
-              </li>
-            </ul>
-          </div>
+          <Login />
         )}
         <div className="border px-4 py-2.5 rounded-full  group">
           <div

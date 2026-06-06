@@ -7,6 +7,8 @@ import { useUser } from "@clerk/nextjs";
 import { Spinner } from "@/components/ui/spinner";
 import { useEffect } from "react";
 import BreadcrumbBasic from "@/app/(components)/shared/breadcrumb/BreadcrumbBasic";
+import SecondartBtn from "@/app/(components)/ui/secondary-btn/SecondartBtn";
+import Link from "next/link";
 const tableHeads = [
   { id: 1, title: "delete" },
   { id: 2, title: "image" },
@@ -186,6 +188,14 @@ export default function CartClient() {
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div className="mt-5 flex items-center justify-end">
+                    <Link href={"/checkout"}>
+                      <SecondartBtn
+                        title={"checkout"}
+                        className={"px-4 py-2 rounded-[3px]"}
+                      />
+                    </Link>
                   </div>
                 </div>
               </div>

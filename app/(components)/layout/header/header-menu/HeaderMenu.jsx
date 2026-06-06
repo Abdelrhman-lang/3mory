@@ -37,7 +37,7 @@ export default function HeaderMenu() {
           />
         </div>
         <div className="flex items-center justify-center pt-10">
-          <Login />
+          {!isSignedIn && <Login />}
         </div>
         <div className="mt-8 text-center">
           <a

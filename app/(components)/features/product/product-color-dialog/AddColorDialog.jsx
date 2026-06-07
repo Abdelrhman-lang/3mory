@@ -15,15 +15,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { showToast } from "@/lib/toast";
 import { addColor } from "@/services/colors/add/addColor";
+import axios from "axios";
 import { useState } from "react";
 
 export function AddColorDialog({ sizeId, setProducts, productId }) {
   const [colorData, setColorData] = useState({
     name: "",
     quantity: 1,
-    image: "",
+    image: null,
   });
+  const [loading, setLoading] = useState(false);
+  const uplaodImage = async () => {
+    const fd = new FormData();
+    fd.append("file", colorData.image);
 
+    const res = await axios.post("/api/cloudinary-upload-image", fd);
+    if (res.data.error) {
+      throw new Error(res.data.error);
+    }
+
+    return res.data.url;
+  };
   const handelInputChange = (e) => {
     const { name, value } = e.target;
     setColorData((prev) => ({ ...prev, [name]: value }));
@@ -31,8 +43,13 @@ export function AddColorDialog({ sizeId, setProducts, productId }) {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
+    if (!colorData.name || !colorData.image)
+      return showToast("error", "Please Fill all Fields To Add Color");
+
+    setLoading(true);
     try {
-      const res = await addColor(colorData, sizeId);
+      const imageUrl = await uplaodImage();
+      const res = await addColor(colorData, sizeId, imageUrl);
       if (res?.success) {
         showToast("success", res?.message);
         setProducts((prevProducts) =>
@@ -54,22 +71,25 @@ export function AddColorDialog({ sizeId, setProducts, productId }) {
         );
         setColorData({
           name: "",
-          image: "",
+          image: null,
+          quantity: 1,
         });
       } else {
         showToast("error", res?.message);
       }
     } catch (error) {
       showToast("error", error?.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="outline">Add Color</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-150">
+      <DialogTrigger asChild>
+        <Button variant="outline">Add Color</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-150">
+        <form onSubmit={handelSubmit}>
           <DialogHeader>
             <DialogTitle className={"text-center"}>Add New Color</DialogTitle>
             <DialogDescription className={"text-center"}>
@@ -77,7 +97,7 @@ export function AddColorDialog({ sizeId, setProducts, productId }) {
               done.
             </DialogDescription>
           </DialogHeader>
-          <FieldGroup>
+          <FieldGroup className={"mt-5"}>
             <Field>
               <Label htmlFor="name">Color Name</Label>
               <Input
@@ -100,23 +120,28 @@ export function AddColorDialog({ sizeId, setProducts, productId }) {
             <Field>
               <Label htmlFor="image">Color Image</Label>
               <Input
+                type={"file"}
                 id="image"
                 name="image"
-                value={colorData.image}
-                onChange={handelInputChange}
+                onChange={(e) =>
+                  setColorData((prev) => ({
+                    ...prev,
+                    image: e.target.files[0],
+                  }))
+                }
               />
             </Field>
           </FieldGroup>
-          <DialogFooter>
+          <DialogFooter className={"mt-5"}>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit" onClick={handelSubmit}>
-              Save changes
+            <Button type="submit" disabled={loading}>
+              {loading ? "Adding..." : "Add Color"}
             </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }

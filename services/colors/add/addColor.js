@@ -3,7 +3,7 @@ import { db } from "@/config/db/db";
 import { colorsTable } from "@/config/db/schema";
 import { and, eq } from "drizzle-orm";
 
-export async function addColor(colorData, sizeId) {
+export async function addColor(colorData, sizeId, image) {
   try {
     if (!colorData || !sizeId)
       return { success: false, message: "Color Data and Size Id are required" };
@@ -27,7 +27,7 @@ export async function addColor(colorData, sizeId) {
         sizeId: sizeId,
         colorName: colorData.name,
         colorQuantity: colorData.quantity,
-        colorImage: colorData.image || null,
+        colorImage: image,
       })
       .returning();
 

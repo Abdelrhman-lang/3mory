@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/select";
 import { updateProduct } from "@/services/products/update/updateProduct";
 import Swal from "sweetalert2";
-import { getProducts } from "@/services/products/getProducts";
+import { getProducts } from "@/services/products/getProductsForPagination";
 export function UpdateDialog({ product, setProducts }) {
   const [productData, setProductData] = useState({
     name: product.name,

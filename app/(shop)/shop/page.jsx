@@ -1,24 +1,41 @@
-import { getProducts } from '@/services/products/getProducts'
-import ShopClient from './shop-client/ShopClient'
+import { getProductsForPagination } from "@/services/products/getProductsForPagination";
+import ShopClient from "./shop-client/ShopClient";
 
 export default async function page({ searchParams }) {
-    const products = await getProducts()
-    const params = await searchParams
+  const params = await searchParams;
 
-    // selected Filter
-    const selectedBrand = params?.brand
-    const selectedCategory = params?.category
+  // pagination
+  const currentPage = Number(params?.page) || 1;
+  const itemsPerPage = 9;
 
-    // Filter Depend on Filter
-    let filterProducts = [...products]
+  // call products
 
-    if (selectedBrand) {
-        filterProducts = products.filter(p => p.brand === selectedBrand)
-    }
-    if (selectedCategory) {
-        filterProducts = filterProducts.filter(p => p.category === selectedCategory)
-    }
-    return (
-        <ShopClient products={filterProducts} allProducts={products} />
-    )
+  // selected Filter
+  const selectedBrand = params?.brand;
+  const selectedCategory = params?.category;
+  const { products, totalPages } = await getProductsForPagination(
+    currentPage,
+    itemsPerPage,
+    selectedBrand,
+    selectedCategory,
+  );
+  // Filter Depend on Filter
+  let filterProducts = [...products];
+
+  if (selectedBrand) {
+    filterProducts = products.filter((p) => p.brand === selectedBrand);
+  }
+  if (selectedCategory) {
+    filterProducts = filterProducts.filter(
+      (p) => p.category === selectedCategory,
+    );
+  }
+  return (
+    <ShopClient
+      products={filterProducts}
+      allProducts={products}
+      currentPage={currentPage}
+      totalPages={totalPages}
+    />
+  );
 }

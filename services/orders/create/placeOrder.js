@@ -121,7 +121,7 @@ export async function placeOrder({
 
     return {
       success: true,
-      message: "Order created and stock updated successfully",
+      message: "Order created successfully",
       orderId,
     };
   } catch (error) {

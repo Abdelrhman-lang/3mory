@@ -10,6 +10,7 @@ import BreadcrumbBasic from "@/app/(components)/shared/breadcrumb/BreadcrumbBasi
 import CheckoutDetails from "@/app/(components)/ui/checkout/details/CheckoutDetails";
 import CheckoutOrder from "@/app/(components)/ui/checkout/order-details/CheckoutOrder";
 import { showToast } from "@/lib/toast";
+import { createPaymobOrder } from "@/services/payment/paymob";
 
 export default function CheckoutClient({ user }) {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export default function CheckoutClient({ user }) {
     address: user?.address || "",
     note: "",
   });
+  const [paymentMethod, setPaymentMethod] = useState("card");
   const [loading, setLoading] = useState(false);
   const handelInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,31 +58,13 @@ export default function CheckoutClient({ user }) {
         address: formData.address,
       });
       if (result?.success) {
-        Swal.fire({
-          icon: "success",
-          title: "Order Placed",
-          text: "Your order has been placed successfully!",
-          timer: 2000,
-          showConfirmButton: false,
-          toast: true,
-          position: "top-end",
-        });
         dispatch(getCartItems({ userEmail }));
+        showToast("success", result?.message);
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Order Failed",
-          text: result?.error || "Failed to place order. Please try again.",
-        });
+        showToast("error", result?.message);
       }
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text:
-          error?.message ||
-          "An error occurred while placing your order. Please try again.",
-      });
+      showToast("error", error.message);
     } finally {
       setLoading(false);
     }

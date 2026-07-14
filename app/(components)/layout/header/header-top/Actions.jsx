@@ -1,0 +1,60 @@
+"use client";
+import { FaShoppingBasket } from "react-icons/fa";
+import { UserButton, useUser } from "@clerk/nextjs";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getCartItems, toggleCart } from "@/RTK/slices/cartSlice";
+import { User } from "lucide-react";
+import { MdDashboard } from "react-icons/md";
+import Login from "@/app/(components)/shared/login/Login";
+export default function Actions({ className }) {
+  const { isSignedIn, user } = useUser();
+  const dispatch = useDispatch();
+  const userEmail = user?.primaryEmailAddress?.emailAddress;
+  const { items } = useSelector((state) => state.cart);
+
+  const userRole = user?.publicMetadata?.role;
+  useEffect(() => {
+    if (userEmail) {
+      dispatch(getCartItems({ userEmail }));
+    }
+  }, [userEmail]);
+
+  return (
+    <div className={`${className} lg:flex lg:w-1/4 justify-end`}>
+      <div className="flex flex-col lg:flex-row gap-3 items-center lg:gap-5">
+        {isSignedIn ? (
+          <UserButton>
+            <UserButton.MenuItems>
+              <UserButton.Link
+                href="/user-account"
+                label="View My Account"
+                labelIcon={<User className="w-4 h-4" />}
+              />
+            </UserButton.MenuItems>
+            {userRole === "admin" && (
+              <UserButton.MenuItems>
+                <UserButton.Link
+                  href="/admin"
+                  label="Go To Dashboard"
+                  labelIcon={<MdDashboard className="w-4 h-4" />}
+                />
+              </UserButton.MenuItems>
+            )}
+          </UserButton>
+        ) : (
+          <Login />
+        )}
+        <div className="border px-4 py-2.5 rounded-full  group">
+          <div
+            className="flex items-center gap-2 text-xs text-accent cursor-pointer transition-colors duration-300 hover:text-secondary"
+            onClick={() => dispatch(toggleCart())}
+          >
+            <FaShoppingBasket size={20} /> {items.length} Item(s)
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
